@@ -62,31 +62,35 @@ img{max-width:100%;display:block}
 
 /* Header */
 .site-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(250,249,246,.92);
-  backdrop-filter:blur(6px);
-  border-bottom:var(--border);
+  position:sticky;top:12px;z-index:50;
+  margin:0 16px;border-radius:20px;
+  background:linear-gradient(135deg,var(--brand-blue-dark),var(--brand-blue));
+  box-shadow:0 12px 30px rgba(9,30,64,.35);
+  border-bottom:none;
   transition:box-shadow .2s ease;
 }
-.site-header.is-scrolled{box-shadow:0 2px 10px rgba(0,0,0,.08)}
 .header-inner{
   display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding-top:14px;padding-bottom:14px;
+  gap:20px;padding:10px 20px;
 }
-.logo{font:700 22px Kalam,cursive;flex:none}
+.logo{
+  font:700 20px Kalam,cursive;flex:none;color:var(--white);
+  display:flex;align-items:center;gap:8px;
+}
+.logo svg{height:26px;width:auto;display:block}
 .main-nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
 .nav-link{
-  background:none;border:none;font:400 15px Mali,sans-serif;color:var(--muted);
+  background:none;border:none;font:400 14.5px Mali,sans-serif;color:rgba(255,255,255,.85);
   padding:6px 0;
 }
-.nav-link:hover{color:var(--accent)}
+.nav-link:hover{color:var(--white)}
 .has-dropdown{position:relative}
 .nav-dropdown-btn{display:flex;align-items:center;gap:4px;cursor:pointer}
 .caret{font-size:11px}
 .dropdown{
-  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);
-  min-width:260px;background:var(--white);border:var(--border);border-radius:var(--radius-md);
-  box-shadow:0 8px 20px rgba(0,0,0,.1);
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);
+  min-width:260px;background:var(--white);border:1.5px solid var(--line-soft);border-radius:var(--radius-md);
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
   padding:8px;display:flex;flex-direction:column;gap:2px;
   opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease;
 }
@@ -102,15 +106,19 @@ img{max-width:100%;display:block}
 
 .header-actions{display:flex;align-items:center;gap:10px}
 .lang-badge{
-  font:600 11px ui-monospace,Menlo,monospace;color:var(--muted);
-  border:1.5px solid var(--line-soft);border-radius:4px;padding:3px 6px;
+  font:600 11px ui-monospace,Menlo,monospace;color:rgba(255,255,255,.85);
+  border:1.5px solid rgba(255,255,255,.35);border-radius:4px;padding:3px 6px;
 }
+.site-header .btn-outline{border-color:rgba(255,255,255,.55);color:var(--white)}
+.site-header .btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.1);color:var(--white)}
+.site-header .btn-ink{background:var(--white);color:var(--brand-blue-dark);border-color:var(--white)}
+.site-header .btn-ink:hover{background:var(--on-blue-muted);color:var(--brand-blue-dark)}
 .menu-toggle{
   display:none;flex-direction:column;justify-content:center;gap:4px;
-  width:32px;height:32px;background:none;border:var(--border);border-radius:var(--radius-sm);
+  width:32px;height:32px;background:none;border:1.5px solid rgba(255,255,255,.55);border-radius:var(--radius-sm);
   padding:0;margin-left:4px;
 }
-.menu-toggle span{display:block;height:1.5px;width:16px;margin:0 auto;background:var(--ink)}
+.menu-toggle span{display:block;height:1.5px;width:16px;margin:0 auto;background:var(--white)}
 
 /* Hero */
 .hero{padding:56px 0;border-bottom:1.5px dashed var(--line-soft)}
@@ -255,14 +263,15 @@ section h2{font-size:clamp(24px,3vw,32px)}
 
 @media (max-width:760px){
   .main-nav{
-    position:absolute;top:100%;left:0;right:0;background:var(--page-bg);
-    border-bottom:var(--border);
+    position:absolute;top:100%;left:0;right:0;background:var(--white);
+    border-radius:0 0 20px 20px;box-shadow:0 12px 20px rgba(9,30,64,.15);
     max-height:0;overflow:hidden;transition:max-height .2s ease;
   }
   .main-nav.is-open{max-height:420px}
   .main-nav ul{flex-direction:column;gap:0;padding:8px 24px 16px}
   .main-nav li{border-bottom:1px solid rgba(0,0,0,.06)}
-  .nav-link{width:100%;text-align:left;padding:12px 0}
+  .main-nav .nav-link{width:100%;text-align:left;padding:12px 0;color:var(--ink)}
+  .main-nav .nav-link:hover{color:var(--brand-blue)}
   .has-dropdown .dropdown{
     position:static;transform:none;box-shadow:none;border:none;
     opacity:1;visibility:visible;pointer-events:auto;max-height:0;overflow:hidden;
