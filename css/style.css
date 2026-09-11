@@ -62,8 +62,8 @@ img{max-width:100%;display:block}
 
 /* Header */
 .site-header{
-  position:sticky;top:22px;z-index:50;
-  width:calc(100% - 40px);max-width:1160px;margin:0 auto;
+  position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:50;
+  width:calc(100% - 40px);max-width:1160px;
   border-radius:18px;
   background:linear-gradient(135deg,rgba(18,63,130,.55),rgba(24,87,179,.4));
   backdrop-filter:blur(16px) saturate(160%);
@@ -125,7 +125,7 @@ img{max-width:100%;display:block}
 
 /* Hero */
 .hero{
-  padding:72px 0 90px;
+  padding:170px 0 90px;
   background:radial-gradient(ellipse 900px 500px at 50% 0%,var(--brand-blue) 0%,var(--brand-blue-dark) 55%,#0a2454 100%);
   color:var(--white);border-bottom:none;text-align:center;
 }
