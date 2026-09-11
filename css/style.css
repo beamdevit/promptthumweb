@@ -155,11 +155,8 @@ img{max-width:100%;display:block}
   flex:1;height:16px;border:1.5px solid var(--ink);border-radius:9px;background:var(--white);
   font:400 10px/16px ui-monospace,Menlo,monospace;color:var(--muted-2);padding:0 8px;overflow:hidden;
 }
-.browser-mock-body{height:260px;display:flex;align-items:center;justify-content:center}
-.play-btn{
-  width:52px;height:52px;border-radius:50%;border:var(--border);background:var(--white);
-  display:flex;align-items:center;justify-content:center;
-}
+.browser-mock-body{height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.browser-mock-body video{height:100%}
 
 /* Section generic */
 section{padding:56px 0;border-bottom:1.5px dashed var(--line-soft)}
