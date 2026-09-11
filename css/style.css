@@ -80,7 +80,7 @@ img{max-width:100%;display:block}
   font:700 20px Kanit,sans-serif;flex:none;color:var(--white);
   display:flex;align-items:center;gap:8px;
 }
-.logo svg{height:26px;width:auto;display:block}
+.logo img{height:28px;width:auto;display:block}
 .main-nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
 .nav-link{
   background:none;border:none;font:400 14.5px Kanit,sans-serif;color:rgba(255,255,255,.85);
