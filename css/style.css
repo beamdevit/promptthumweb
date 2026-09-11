@@ -62,16 +62,19 @@ img{max-width:100%;display:block}
 
 /* Header */
 .site-header{
-  position:sticky;top:12px;z-index:50;
-  margin:0 16px;border-radius:20px;
-  background:linear-gradient(135deg,var(--brand-blue-dark),var(--brand-blue));
+  position:sticky;top:22px;z-index:50;
+  width:calc(100% - 40px);max-width:1160px;margin:0 auto;
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(18,63,130,.55),rgba(24,87,179,.4));
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid rgba(255,255,255,.18);
   box-shadow:0 12px 30px rgba(9,30,64,.35);
-  border-bottom:none;
   transition:box-shadow .2s ease;
 }
 .header-inner{
   display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:10px 20px;
+  gap:20px;padding:0 30px;min-height:80px;
 }
 .logo{
   font:700 20px Kalam,cursive;flex:none;color:var(--white);
@@ -299,6 +302,7 @@ section h2{font-size:clamp(24px,3vw,32px)}
 }
 
 @media (max-width:760px){
+  .header-inner{padding:0 20px;min-height:68px}
   .main-nav{
     position:absolute;top:100%;left:0;right:0;background:var(--white);
     border-radius:0 0 20px 20px;box-shadow:0 12px 20px rgba(9,30,64,.15);
