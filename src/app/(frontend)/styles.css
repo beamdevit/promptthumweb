@@ -163,6 +163,8 @@ img{max-width:100%;display:block}
 
 /* Section generic */
 section{padding:56px 0;border-bottom:1.5px dashed var(--line-soft)}
+/* Keep anchor targets clear of the fixed navbar (22px offset + 80px tall). */
+section[id]{scroll-margin-top:118px}
 section h2{font-size:clamp(24px,3vw,32px)}
 .section-sub{color:var(--muted);font:300 15px/1.6 Kanit,sans-serif;max-width:560px;margin:10px 0 28px}
 .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px}
@@ -330,6 +332,41 @@ section h2{font-size:clamp(24px,3vw,32px)}
   .icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .portfolio-grid{grid-template-columns:1fr}
   .articles-grid{grid-template-columns:1fr}
+}
+
+/* About / company history */
+.about{
+  background:radial-gradient(ellipse 1100px 600px at 20% 0%,var(--brand-blue) 0%,var(--brand-blue-dark) 55%,#0a2454 100%);
+  border-bottom:none;
+}
+.about-card{
+  display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:56px;align-items:center;
+  padding:56px;border-radius:24px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 30px 60px rgba(9,30,64,.35);
+}
+.about-logo{display:flex;align-items:center;justify-content:center}
+.about-logo img{width:100%;max-width:340px;height:auto}
+.about-eyebrow{
+  display:block;margin-bottom:10px;
+  font:600 12px Kanit,sans-serif;letter-spacing:.14em;
+  color:rgba(255,255,255,.6);
+}
+.about-body h2{color:var(--white);font-size:clamp(24px,3vw,34px);margin-bottom:22px}
+.about-body p{
+  margin:0 0 18px;
+  font:300 15px/1.9 Kanit,sans-serif;color:var(--on-blue-muted);
+}
+.about-body p:last-child{margin-bottom:0}
+
+@media (max-width:960px){
+  .about-card{grid-template-columns:1fr;gap:28px;padding:36px 26px}
+  .about-logo img{max-width:240px}
+  .about-body p{font-size:14.5px;line-height:1.85}
 }
 
 /* Welcome splash */
