@@ -8,6 +8,7 @@ import sharp from 'sharp'
 
 import { Leads } from './collections/Leads'
 import { Media } from './collections/Media'
+import { Portfolio } from './collections/Portfolio'
 import { Users } from './collections/Users'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -22,7 +23,7 @@ export default buildConfig({
       beforeDashboard: ['@/components/admin/DashboardStats#DashboardStats'],
     },
   },
-  collections: [Leads, Media, Users],
+  collections: [Leads, Portfolio, Media, Users],
   editor: lexicalEditor(),
   db: postgresAdapter({
     // Railway's Postgres plugin injects DATABASE_URL; DATABASE_URI lets us override it.

@@ -31,10 +31,11 @@ export async function DashboardStats() {
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
-  const [totalLeads, newLeads, recentWeek, mediaCount, recent] = await Promise.all([
+  const [totalLeads, newLeads, recentWeek, portfolioCount, mediaCount, recent] = await Promise.all([
     payload.count({ collection: 'leads' }),
     payload.count({ collection: 'leads', where: { status: { equals: 'new' } } }),
     payload.count({ collection: 'leads', where: { createdAt: { greater_than: sevenDaysAgo } } }),
+    payload.count({ collection: 'portfolio', where: { published: { equals: true } } }),
     payload.count({ collection: 'media' }),
     payload.find({
       collection: 'leads',
@@ -68,6 +69,10 @@ export async function DashboardStats() {
           <div style={value}>{recentWeek.totalDocs}</div>
         </div>
         <div style={card}>
+          <div style={label}>ผลงานที่เผยแพร่</div>
+          <div style={value}>{portfolioCount.totalDocs}</div>
+        </div>
+        <div style={card}>
           <div style={label}>ไฟล์ใน Media</div>
           <div style={value}>{mediaCount.totalDocs}</div>
         </div>
@@ -76,6 +81,9 @@ export async function DashboardStats() {
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '18px 0 24px' }}>
         <a className="btn btn--style-primary btn--size-small" href="/admin/collections/leads">
           ดูข้อความติดต่อ
+        </a>
+        <a className="btn btn--style-secondary btn--size-small" href="/admin/collections/portfolio/create">
+          เพิ่มผลงาน
         </a>
         <a className="btn btn--style-secondary btn--size-small" href="/admin/collections/media">
           อัปโหลดไฟล์

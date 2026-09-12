@@ -1,6 +1,13 @@
 import { ContactForm } from '@/components/site/ContactForm'
 import { PackageButton } from '@/components/site/PackageButton'
+import { PortfolioCard } from '@/components/site/PortfolioCard'
+import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
+import { getFeaturedPortfolio } from '@/lib/portfolio'
+
+// Rendered per request: Railway's private network (and so Postgres) is not
+// reachable during the build, so these pages must not be prerendered.
+export const dynamic = 'force-dynamic'
 
 const INK = '#1c1c1c'
 
@@ -235,7 +242,9 @@ const companyHistory = [
 const VIDEO_BASE =
   'https://corpusx.bol.co.th/static/corpusx/videos/cpx_website_edit_9feb2026_v2'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredWork = await getFeaturedPortfolio(3)
+
   return (
     <>
       <SiteHeader />
@@ -384,22 +393,21 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="portfolio" id="portfolio">
-          <div className="wrap">
-            <div className="section-head">
-              <h2>ผลงานที่เลือกมาแล้ว</h2>
-              <a className="see-all" href="#portfolio">ดูทั้งหมด →</a>
+        {featuredWork.length > 0 && (
+          <section className="portfolio" id="portfolio">
+            <div className="wrap">
+              <div className="section-head">
+                <h2>ผลงานที่เลือกมาแล้ว</h2>
+                <a className="see-all" href="/portfolio">ดูทั้งหมด →</a>
+              </div>
+              <div className="work-grid">
+                {featuredWork.map((item) => (
+                  <PortfolioCard key={item.id} item={item} />
+                ))}
+              </div>
             </div>
-            <div className="portfolio-grid">
-              {['Lookbook โรงแรม', 'ร้านซักผ้า', 'Banner สินค้า'].map((item) => (
-                <a className="portfolio-item placeholder-fill" href="#portfolio" key={item}>
-                  <span>{item}</span>
-                </a>
-              ))}
-              <a className="portfolio-more" href="#portfolio" aria-label="ดูผลงานเพิ่มเติม">›</a>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section className="articles" id="articles">
           <div className="wrap">
@@ -461,26 +469,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="wrap footer-inner">
-          <div className="footer-brand">Promptthum · รับทำการตลาดออนไลน์ครบวงจร</div>
-          <div className="footer-social">
-            <a href="#top">FB</a>
-            <a href="#top">IG</a>
-            <a href="#top">TikTok</a>
-            <a href="#top">LINE</a>
-          </div>
-        </div>
-        <div className="wrap footer-bottom">
-          <div>Copyright 2026 © Promptthum</div>
-          <div className="footer-links">
-            <a href="#top">MAIN</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#about">About</a>
-            <a href="#articles">Blog</a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   )
 }
