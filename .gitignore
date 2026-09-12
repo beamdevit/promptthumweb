@@ -3,6 +3,5 @@ node_modules
 .env
 .env*.local
 public/media
-src/payload-types.ts
 *.tsbuildinfo
 next-env.d.ts
