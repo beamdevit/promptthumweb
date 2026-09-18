@@ -1,23 +1,6 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 
-const card: React.CSSProperties = {
-  border: '1px solid var(--theme-elevation-150)',
-  borderRadius: 8,
-  padding: '16px 18px',
-  background: 'var(--theme-elevation-0)',
-}
-
-const label: React.CSSProperties = {
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '.04em',
-  color: 'var(--theme-elevation-600)',
-  marginBottom: 6,
-}
-
-const value: React.CSSProperties = { fontSize: 30, fontWeight: 700, lineHeight: 1.1 }
-
 const statusLabels: Record<string, string> = {
   new: 'ใหม่',
   contacting: 'กำลังติดต่อ',
@@ -45,86 +28,28 @@ export async function DashboardStats() {
     }),
   ])
 
+  const metrics = [
+    { label: 'ข้อความติดต่อทั้งหมด', value: totalLeads.totalDocs, hint: 'ข้อมูลลูกค้าจากหน้าเว็บไซต์', icon: '↗', href: '/admin/collections/leads' },
+    { label: 'รอการติดต่อกลับ', value: newLeads.totalDocs, hint: 'ข้อความที่มีสถานะใหม่', icon: '◎', href: '/admin/collections/leads?where[status][equals]=new' },
+    { label: 'ผู้ติดต่อใน 7 วัน', value: recentWeek.totalDocs, hint: 'นับจากวันที่ส่งข้อความ', icon: '◷', href: '/admin/collections/leads' },
+    { label: 'ผลงานที่เผยแพร่', value: portfolioCount.totalDocs, hint: 'ผลงานที่แสดงบนเว็บไซต์', icon: '▦', href: '/admin/collections/portfolio' },
+  ]
+  const contacted = Math.max(0, totalLeads.totalDocs - newLeads.totalDocs)
+  const percent = totalLeads.totalDocs ? Math.round(contacted / totalLeads.totalDocs * 100) : 0
   return (
-    <div style={{ marginBottom: 32 }}>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: 16,
-        }}
-      >
-        <div style={card}>
-          <div style={label}>ข้อความติดต่อทั้งหมด</div>
-          <div style={value}>{totalLeads.totalDocs}</div>
-        </div>
-        <div style={{ ...card, borderColor: newLeads.totalDocs > 0 ? '#f5a623' : undefined }}>
-          <div style={label}>ยังไม่ได้ติดต่อ</div>
-          <div style={{ ...value, color: newLeads.totalDocs > 0 ? '#d98f12' : undefined }}>
-            {newLeads.totalDocs}
-          </div>
-        </div>
-        <div style={card}>
-          <div style={label}>7 วันล่าสุด</div>
-          <div style={value}>{recentWeek.totalDocs}</div>
-        </div>
-        <div style={card}>
-          <div style={label}>ผลงานที่เผยแพร่</div>
-          <div style={value}>{portfolioCount.totalDocs}</div>
-        </div>
-        <div style={card}>
-          <div style={label}>ไฟล์ใน Media</div>
-          <div style={value}>{mediaCount.totalDocs}</div>
-        </div>
+    <div className="pt-dashboard">
+      <header className="pt-dashboard-heading">
+        <div><p className="pt-eyebrow">PROMPTTHUM / WORKSPACE</p><h1>ภาพรวมระบบ</h1><p>ยินดีต้อนรับ จัดการเว็บไซต์และติดตามผู้ติดต่อได้จากที่นี่</p></div>
+        <a className="pt-button" href="/" target="_blank" rel="noopener noreferrer">เปิดเว็บไซต์ ↗</a>
+      </header>
+      <div className="pt-metrics">{metrics.map(m => <a className="pt-card pt-metric" key={m.label} href={m.href}><div className="pt-metric-top"><span className="pt-icon" aria-hidden="true">{m.icon}</span><span aria-hidden="true">↗</span></div><span className="pt-metric-label">{m.label}</span><strong>{m.value.toLocaleString('th-TH')}</strong><span className="pt-hint">{m.hint}</span></a>)}</div>
+      <div className="pt-dashboard-grid">
+        <section className="pt-card pt-activity"><div className="pt-card-heading"><h2>ข้อความติดต่อล่าสุด</h2><a href="/admin/collections/leads">ดูทั้งหมด →</a></div>
+          {recent.docs.length ? <ul className="pt-activity-list">{recent.docs.map(lead => <li key={lead.id}><a href={`/admin/collections/leads/${lead.id}`}><span className="pt-icon" aria-hidden="true">{(lead.name || 'P').slice(0,1)}</span><div className="pt-activity-copy"><strong>{lead.name}</strong><span>{lead.contact}</span><span className={'pt-status pt-status--'+lead.status}>{statusLabels[lead.status] ?? lead.status}</span></div><time dateTime={lead.createdAt}>{new Date(lead.createdAt).toLocaleDateString('th-TH',{day:'numeric',month:'short',timeZone:'Asia/Bangkok'})}</time></a></li>)}</ul> : <div className="pt-empty"><span className="pt-icon" aria-hidden="true">◎</span><h3>ยังไม่มีข้อความติดต่อ</h3><p>ข้อความจากแบบฟอร์มบนเว็บไซต์จะแสดงที่นี่</p></div>}
+        </section>
+        <aside className="pt-side-cards"><section className="pt-card"><h2>สถานะการติดตาม</h2><div className="pt-progress-label"><span>เปลี่ยนจากสถานะใหม่แล้ว</span><strong>{percent}%</strong></div><progress max="100" value={percent} aria-label="สัดส่วนผู้ติดต่อที่เปลี่ยนจากสถานะใหม่แล้ว"/><p className="pt-hint">{contacted} จาก {totalLeads.totalDocs} รายการ</p><div className="pt-stat-row"><span>รอติดต่อกลับ</span><strong>{newLeads.totalDocs}</strong></div><div className="pt-stat-row"><span>ไฟล์ในคลังสื่อ</span><strong>{mediaCount.totalDocs}</strong></div></section>
+        <section className="pt-card"><h2>จัดการด่วน</h2><div className="pt-quick-links"><a href="/admin/collections/portfolio/create"><span>เพิ่มผลงานใหม่</span><span aria-hidden="true">＋</span></a><a href="/admin/collections/media/create"><span>อัปโหลดรูปและไฟล์</span><span aria-hidden="true">↑</span></a><a href="/admin/account"><span>บัญชีของฉัน</span><span aria-hidden="true">→</span></a></div></section></aside>
       </div>
-
-      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '18px 0 24px' }}>
-        <a className="btn btn--style-primary btn--size-small" href="/admin/collections/leads">
-          ดูข้อความติดต่อ
-        </a>
-        <a className="btn btn--style-secondary btn--size-small" href="/admin/collections/portfolio/create">
-          เพิ่มผลงาน
-        </a>
-        <a className="btn btn--style-secondary btn--size-small" href="/admin/collections/media">
-          อัปโหลดไฟล์
-        </a>
-        <a className="btn btn--style-secondary btn--size-small" href="/" target="_blank" rel="noreferrer">
-          เปิดเว็บไซต์
-        </a>
-      </div>
-
-      {recent.docs.length > 0 && (
-        <div style={card}>
-          <div style={{ ...label, marginBottom: 12 }}>ข้อความติดต่อล่าสุด</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {recent.docs.map((lead) => (
-              <a
-                key={lead.id}
-                href={`/admin/collections/leads/${lead.id}`}
-                style={{
-                  display: 'flex',
-                  gap: 12,
-                  alignItems: 'baseline',
-                  padding: '8px 0',
-                  borderTop: '1px solid var(--theme-elevation-100)',
-                  textDecoration: 'none',
-                }}
-              >
-                <strong style={{ minWidth: 140 }}>{lead.name}</strong>
-                <span style={{ color: 'var(--theme-elevation-600)', flex: 1 }}>{lead.contact}</span>
-                <span style={{ fontSize: 12 }}>{statusLabels[lead.status] ?? lead.status}</span>
-                <span style={{ fontSize: 12, color: 'var(--theme-elevation-500)' }}>
-                  {new Date(lead.createdAt).toLocaleDateString('th-TH', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: '2-digit',
-                  })}
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

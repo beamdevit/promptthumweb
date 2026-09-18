@@ -16,11 +16,13 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 export default buildConfig({
   admin: {
     user: Users.slug,
+    theme: 'light',
     meta: {
       titleSuffix: ' · Promptthum Admin',
     },
     components: {
-      beforeDashboard: ['@/components/admin/DashboardStats#DashboardStats'],
+      views: { dashboard: { Component: '@/components/admin/DashboardStats#DashboardStats' } },
+      beforeNavLinks: ['@/components/admin/AdminBrand#AdminBrand'],
     },
   },
   collections: [Leads, Portfolio, Media, Users],
