@@ -1,3 +1,4 @@
+import { HomeShowcase } from '@/components/site/HomeShowcase'
 import { ContactForm } from '@/components/site/ContactForm'
 import { PackageButton } from '@/components/site/PackageButton'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
@@ -302,6 +303,8 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        <HomeShowcase />
 
         <section className="business-fit">
           <div className="wrap">

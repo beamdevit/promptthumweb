@@ -1,3 +1,10 @@
+.home-showcase{padding:72px 0;background:var(--page-bg)}
+.home-showcase a,.home-showcase a:hover{color:var(--white)}
+.showcase-heading{max-width:760px;margin-bottom:8px}
+.showcase-eyebrow{font:500 11px Kanit,sans-serif;letter-spacing:.14em;color:var(--accent);margin:0 0 14px}
+.showcase-heading h2{font-size:clamp(25px,3.2vw,40px);line-height:1.35}
+.showcase-heading h2 span{color:var(--brand-blue)}
+@media(max-width:600px){.home-showcase{padding:44px 0}.showcase-heading h2 span{display:block}}
 :root{
   --ink:#16213e;
   --paper:#eef4fb;
