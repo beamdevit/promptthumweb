@@ -6,7 +6,7 @@ export const Leads: CollectionConfig = {
   admin: {
     group: 'Lead Management',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'contact', 'budget', 'status', 'createdAt'],
+    defaultColumns: ['name', 'contact', 'status', 'createdAt'],
   },
   access: {
     // Leads arrive through the public contact endpoint, which creates them with
@@ -30,7 +30,8 @@ export const Leads: CollectionConfig = {
         {
           name: 'budget',
           type: 'select',
-          label: 'งบประมาณ',
+          label: 'งบประมาณ (ข้อมูลเดิม)',
+          admin: { hidden: true },
           options: [
             { label: '3,000', value: '3000' },
             { label: '10,000', value: '10000' },
@@ -39,7 +40,7 @@ export const Leads: CollectionConfig = {
           ],
           defaultValue: 'unspecified',
         },
-        { name: 'packageInterest', type: 'text', label: 'แพ็กเกจที่สนใจ' },
+        { name: 'packageInterest', type: 'text', label: 'แพ็กเกจที่สนใจ (ข้อมูลเดิม)', admin: { hidden: true } },
       ],
     },
     { name: 'message', type: 'textarea', label: 'รายละเอียดงาน' },

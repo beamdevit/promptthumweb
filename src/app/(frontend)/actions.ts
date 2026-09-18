@@ -7,7 +7,6 @@ import { getPayload } from 'payload'
 import { notifyNewLead } from '@/lib/notify'
 import { checkRateLimit } from '@/lib/rateLimit'
 
-const BUDGETS = ['3000', '10000', '20000+'] as const
 
 export type LeadFormState = { ok: boolean; message: string }
 
@@ -29,8 +28,6 @@ export async function submitLead(formData: FormData): Promise<LeadFormState> {
   const name = clip(formData.get('name'), 120)
   const contact = clip(formData.get('contact'), 160)
   const message = clip(formData.get('message'), 5000)
-  const budgetInput = clip(formData.get('budget'), 20)
-  const packageInterest = clip(formData.get('packageInterest'), 120)
 
   if (name.length < 2) {
     return { ok: false, message: 'กรุณากรอกชื่อของคุณ' }
@@ -50,9 +47,6 @@ export async function submitLead(formData: FormData): Promise<LeadFormState> {
     return { ok: false, message: 'ส่งข้อมูลถี่เกินไป กรุณาลองใหม่ในอีกสักครู่' }
   }
 
-  const budget = (BUDGETS as readonly string[]).includes(budgetInput)
-    ? budgetInput
-    : 'unspecified'
 
   try {
     const payload = await getPayload({ config })
@@ -65,8 +59,6 @@ export async function submitLead(formData: FormData): Promise<LeadFormState> {
         name,
         contact,
         message,
-        budget: budget as 'unspecified' | '3000' | '10000' | '20000+',
-        packageInterest,
         status: 'new',
         sourcePage: clip(formData.get('sourcePage'), 300),
         referrer: clip(formData.get('referrer'), 300),
@@ -76,7 +68,7 @@ export async function submitLead(formData: FormData): Promise<LeadFormState> {
       },
     })
 
-    await notifyNewLead({ name, contact, budget, packageInterest, message })
+    await notifyNewLead({ name, contact, message })
 
     return { ok: true, message: 'ขอบคุณค่ะ! ทีมงานจะติดต่อกลับภายใน 24 ชม.' }
   } catch (error) {

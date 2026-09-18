@@ -109,7 +109,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
         <section className="work-cta">
           <div className="wrap">
             <h2>อยากได้งานแบบนี้ไหม?</h2>
-            <p>เริ่มต้น 3,000฿ · บอกงบและเป้าหมาย เราเสนอแพ็กเกจที่เหมาะที่สุด</p>
+            <p>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ</p>
             <div className="work-cta-actions">
               <a className="btn btn-cta" href="/#contact">คุยกับทีม</a>
               <a className="btn btn-outline" href="/portfolio">ดูผลงานอื่น</a>

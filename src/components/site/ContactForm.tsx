@@ -1,29 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 
 import { submitLead, type LeadFormState } from '@/app/(frontend)/actions'
-import { SELECT_PACKAGE_EVENT, type SelectPackageDetail } from '@/lib/selectPackage'
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
-  const [budget, setBudget] = useState('')
-  const [packageInterest, setPackageInterest] = useState('')
   const [status, setStatus] = useState<LeadFormState | null>(null)
   const [pending, startTransition] = useTransition()
 
-  useEffect(() => {
-    const onSelectPackage = (event: Event) => {
-      const detail = (event as CustomEvent<SelectPackageDetail>).detail
-      setBudget(detail.budget)
-      setPackageInterest(detail.label)
-      nameRef.current?.focus({ preventScroll: true })
-    }
-
-    window.addEventListener(SELECT_PACKAGE_EVENT, onSelectPackage)
-    return () => window.removeEventListener(SELECT_PACKAGE_EVENT, onSelectPackage)
-  }, [])
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -41,8 +27,6 @@ export function ContactForm() {
       setStatus(result)
       if (result.ok) {
         formRef.current?.reset()
-        setBudget('')
-        setPackageInterest('')
       }
     })
   }
@@ -55,23 +39,9 @@ export function ContactForm() {
       <label className="sr-only" htmlFor="cf-contact">อีเมล / เบอร์โทร</label>
       <input id="cf-contact" name="contact" type="text" placeholder="อีเมล / เบอร์โทร" required />
 
-      <label className="sr-only" htmlFor="cf-budget">งบประมาณ</label>
-      <select
-        id="cf-budget"
-        name="budget"
-        value={budget}
-        onChange={(event) => setBudget(event.target.value)}
-      >
-        <option value="">งบประมาณ (3,000 / 10,000 / 20,000+)</option>
-        <option value="3000">3,000</option>
-        <option value="10000">10,000</option>
-        <option value="20000+">20,000+</option>
-      </select>
-
-      <label className="sr-only" htmlFor="cf-detail">รายละเอียดงาน</label>
+<label className="sr-only" htmlFor="cf-detail">รายละเอียดงาน</label>
       <textarea id="cf-detail" name="message" rows={3} placeholder="รายละเอียดงาน" />
 
-      <input type="hidden" name="packageInterest" value={packageInterest} />
 
       {/* Honeypot: hidden from people, irresistible to bots. */}
       <div className="sr-only" aria-hidden="true">

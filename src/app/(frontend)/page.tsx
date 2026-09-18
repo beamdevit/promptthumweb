@@ -1,6 +1,5 @@
 import { HomeShowcase } from '@/components/site/HomeShowcase'
 import { ContactForm } from '@/components/site/ContactForm'
-import { PackageButton } from '@/components/site/PackageButton'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
@@ -9,201 +8,6 @@ import { getFeaturedPortfolio } from '@/lib/portfolio'
 // Rendered per request: Railway's private network (and so Postgres) is not
 // reachable during the build, so these pages must not be prerendered.
 export const dynamic = 'force-dynamic'
-
-const INK = '#1c1c1c'
-
-const fitCards = [
-  {
-    title: 'เปิดร้านใหม่',
-    text: 'Landing Page หน้าเดียว พร้อม SEO พื้นฐาน',
-    icon: (
-      <path
-        d="M3 10.5 12 4l9 6.5V19a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
-        fill="none"
-        stroke={INK}
-        strokeWidth="1.5"
-      />
-    ),
-  },
-  {
-    title: 'ธุรกิจบริการ',
-    text: 'เว็บ 3-5 หน้า + ฟอร์มติดต่อ + Blog',
-    icon: (
-      <path d="M4 6h16M4 12h16M4 18h10" stroke={INK} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    ),
-  },
-  {
-    title: 'E-commerce',
-    text: 'ระบบขายของ CMS จัดการเองได้',
-    icon: (
-      <>
-        <path d="M4 5h16l-1.5 10h-13z" fill="none" stroke={INK} strokeWidth="1.5" />
-        <circle cx="9" cy="19" r="1.4" fill={INK} />
-        <circle cx="17" cy="19" r="1.4" fill={INK} />
-      </>
-    ),
-  },
-  {
-    title: 'แบรนด์ใหม่',
-    text: 'โลโก้ · CI · Packaging (Pixel Perfect)',
-    icon: (
-      <>
-        <circle cx="12" cy="12" r="8" fill="none" stroke={INK} strokeWidth="1.5" />
-        <path d="M12 7v5l3 3" stroke={INK} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      </>
-    ),
-  },
-  {
-    title: 'ทีมการตลาด',
-    text: 'Ads Banner · คอนเทนต์ · วีดีโอเอไอ',
-    icon: (
-      <>
-        <path d="M4 19V9l8-5 8 5v10" fill="none" stroke={INK} strokeWidth="1.5" />
-        <path d="M9 19v-6h6v6" fill="none" stroke={INK} strokeWidth="1.5" />
-      </>
-    ),
-  },
-  {
-    title: 'เว็บเดิมเก่าแล้ว',
-    text: 'Redesign + เพิ่ม SEO Score',
-    icon: (
-      <>
-        <path d="M4 4h11l5 5v11H4z" fill="none" stroke={INK} strokeWidth="1.5" />
-        <path d="M15 4v5h5" fill="none" stroke={INK} strokeWidth="1.5" />
-      </>
-    ),
-  },
-]
-
-const services = [
-  {
-    label: 'WordPress',
-    icon: (
-      <>
-        <circle cx="12" cy="12" r="9" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path
-          d="M4 10h16M9 3.5c-3 6-3 11 0 17M15 3.5c3 6 3 11 0 17"
-          stroke={INK}
-          strokeWidth="1.2"
-          fill="none"
-        />
-      </>
-    ),
-  },
-  {
-    label: 'UX/UI',
-    icon: (
-      <>
-        <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M8 9h8M8 13h5" stroke={INK} strokeWidth="1.4" strokeLinecap="round" />
-      </>
-    ),
-  },
-  {
-    label: 'SEO',
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="6" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M20 20l-4.5-4.5" stroke={INK} strokeWidth="1.4" strokeLinecap="round" />
-      </>
-    ),
-  },
-  {
-    label: 'โลโก้ / CI',
-    icon: (
-      <path
-        d="M12 4l7 3v5c0 4.5-3 7.5-7 8-4-.5-7-3.5-7-8V7z"
-        fill="none"
-        stroke={INK}
-        strokeWidth="1.4"
-      />
-    ),
-  },
-  {
-    label: 'Ads Banner',
-    icon: (
-      <>
-        <rect x="3.5" y="7" width="17" height="10" rx="1.5" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M7 11h6" stroke={INK} strokeWidth="1.4" strokeLinecap="round" />
-      </>
-    ),
-  },
-  {
-    label: 'วีดีโอเอไอ',
-    icon: (
-      <>
-        <rect x="3.5" y="6" width="13" height="12" rx="1.5" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M16.5 10l4-2.5v9l-4-2.5z" fill="none" stroke={INK} strokeWidth="1.4" />
-      </>
-    ),
-  },
-  {
-    label: 'Packaging',
-    icon: (
-      <>
-        <path d="M4 8l8-4 8 4-8 4z" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M4 8v8l8 4 8-4V8M12 12v8" fill="none" stroke={INK} strokeWidth="1.4" />
-      </>
-    ),
-  },
-  {
-    label: 'E-commerce',
-    icon: (
-      <>
-        <path d="M4 5h16l-1.5 10h-13z" fill="none" stroke={INK} strokeWidth="1.4" />
-        <circle cx="9" cy="19" r="1.3" fill={INK} />
-        <circle cx="17" cy="19" r="1.3" fill={INK} />
-      </>
-    ),
-  },
-  {
-    label: 'Multi-Language',
-    icon: (
-      <>
-        <circle cx="12" cy="12" r="9" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path
-          d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18"
-          stroke={INK}
-          strokeWidth="1.2"
-          fill="none"
-        />
-      </>
-    ),
-  },
-  {
-    label: 'SSL / Hosting',
-    icon: (
-      <>
-        <rect x="6" y="10.5" width="12" height="8.5" rx="1.5" fill="none" stroke={INK} strokeWidth="1.4" />
-        <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" stroke={INK} strokeWidth="1.4" fill="none" />
-      </>
-    ),
-  },
-]
-
-const packages = [
-  {
-    tier: 'pack S',
-    amount: '3,000',
-    budget: '3000',
-    features: 'เว็บหน้าเดียว · UX/UI เบื้องต้น · มือถือ 100% · SEO พื้นฐาน · 2GB · SSL',
-    featured: false,
-  },
-  {
-    tier: 'pack M',
-    amount: '10,000',
-    budget: '10000',
-    features: 'เว็บ 3-5 หน้า · UX/UI สวยงาม · On-Page SEO · Blog/Portfolio · ฟอร์ม + Social',
-    featured: true,
-  },
-  {
-    tier: 'pack XXL',
-    amount: '20,000',
-    budget: '20000+',
-    features: '5+ หน้า + CMS · UX/UI พรีเมียม Custom · E-commerce/จองคิว · Multi-Language · 1TB',
-    featured: false,
-  },
-]
 
 const articles = [
   {
@@ -261,7 +65,6 @@ export default async function HomePage() {
                 เรียกได้ว่าครบจบในที่เดียว ราคาสบายกระเป๋า ด้วยทีมงานมืออาชีพ
               </p>
               <div className="hero-cta">
-                <a className="btn btn-cta" href="#pricing">เริ่มต้น 3,000฿</a>
                 <a className="btn btn-outline" href="#contact">คุยกับทีม</a>
               </div>
             </div>
@@ -306,48 +109,7 @@ export default async function HomePage() {
 
         <HomeShowcase />
 
-        <section className="business-fit">
-          <div className="wrap">
-            <h2>ไม่ว่าธุรกิจคุณแบบไหน… เราช่วยได้</h2>
-            <p className="section-sub">
-              เลือกสิ่งที่ใกล้เคียงธุรกิจคุณที่สุด แล้วให้เราแนะนำแพ็กเกจที่เหมาะที่สุด
-            </p>
-            <div className="fit-grid">
-              {fitCards.map((card) => (
-                <article className="fit-card" key={card.title}>
-                  <div className="fit-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="22" height="22">
-                      {card.icon}
-                    </svg>
-                  </div>
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        <section className="services" id="services">
-          <div className="wrap">
-            <h2>ครบทุกบริการในที่เดียว</h2>
-            <p className="section-sub">
-              One Stop Service — งานครีเอทีฟและงานเทคนิคทุกอย่างที่ธุรกิจคุณต้องใช้ อยู่ในที่เดียว
-            </p>
-            <ul className="icon-grid">
-              {services.map((service) => (
-                <li key={service.label}>
-                  <span className="icon-circle" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="18" height="18">
-                      {service.icon}
-                    </svg>
-                  </span>
-                  <span>{service.label}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
 
         <section className="about" id="about">
           <div className="wrap">
@@ -364,35 +126,6 @@ export default async function HomePage() {
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="pricing" id="pricing">
-          <div className="wrap">
-            <h2>แพ็กเกจและโปรโมชั่นทำเว็บไซต์</h2>
-            <div className="pricing-grid">
-              {packages.map((pkg) => (
-                <article
-                  className={`price-card${pkg.featured ? ' price-card--featured' : ''}`}
-                  key={pkg.tier}
-                >
-                  <div className="price-tier">
-                    {pkg.tier} {pkg.featured && <span className="badge">ยอดนิยม</span>}
-                  </div>
-                  <div className="price-amount">
-                    {pkg.amount}
-                    <span>฿</span>
-                  </div>
-                  <p className="price-features">{pkg.features}</p>
-                  <PackageButton
-                    budget={pkg.budget}
-                    label={`${pkg.tier} — ${pkg.amount}฿`}
-                    className={`btn ${pkg.featured ? 'btn-ink' : 'btn-outline'} pkg-btn`}
-                  />
-                </article>
-              ))}
-            </div>
-            <p className="price-note">ทุกแพ็กเกจปรับแต่งเพิ่มได้ ขึ้นอยู่กับฟังก์ชันที่ต้องการ</p>
           </div>
         </section>
 
@@ -452,7 +185,7 @@ export default async function HomePage() {
             <div className="contact-form-col">
               <h2>ปรึกษาฟรี ไม่มีค่าใช้จ่าย</h2>
               <p className="section-sub">
-                บอกงบและเป้าหมาย เราเสนอแพ็กเกจที่เหมาะที่สุด ทีมงานติดต่อกลับภายใน 24 ชม.
+                บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.
               </p>
               <ContactForm />
             </div>

@@ -78,10 +78,9 @@ export default async function PortfolioPage({ searchParams }: Props) {
         <section className="work-cta">
           <div className="wrap">
             <h2>มีงานในใจอยู่แล้ว?</h2>
-            <p>บอกงบและเป้าหมาย เราเสนอแพ็กเกจที่เหมาะที่สุด ทีมงานติดต่อกลับภายใน 24 ชม.</p>
+            <p>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.</p>
             <div className="work-cta-actions">
               <a className="btn btn-cta" href="/#contact">คุยกับทีม</a>
-              <a className="btn btn-outline" href="/#pricing">ดูแพ็กเกจ</a>
             </div>
           </div>
         </section>

@@ -1,8 +1,6 @@
 type LeadSummary = {
   name: string
   contact: string
-  budget?: string
-  packageInterest?: string
   message?: string
 }
 
@@ -11,8 +9,6 @@ function buildText(lead: LeadSummary) {
     '🔔 มีข้อความติดต่อใหม่',
     `ชื่อ: ${lead.name}`,
     `ติดต่อ: ${lead.contact}`,
-    lead.budget && lead.budget !== 'unspecified' ? `งบประมาณ: ${lead.budget}` : null,
-    lead.packageInterest ? `แพ็กเกจที่สนใจ: ${lead.packageInterest}` : null,
     lead.message ? `รายละเอียด: ${lead.message}` : null,
   ]
     .filter(Boolean)

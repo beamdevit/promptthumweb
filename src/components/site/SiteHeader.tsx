@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -24,37 +23,6 @@ export function SiteHeader() {
 
         <nav className={`main-nav${menuOpen ? ' is-open' : ''}`} id="main-nav">
           <ul>
-            <li className={`has-dropdown${dropdownOpen ? ' is-open' : ''}`}>
-              <button
-                className="nav-link nav-dropdown-btn"
-                aria-expanded={dropdownOpen}
-                aria-controls="services-dropdown"
-                onClick={() => setDropdownOpen((open) => !open)}
-              >
-                บริการ <span className="caret" aria-hidden="true">▾</span>
-              </button>
-              <div className="dropdown" id="services-dropdown">
-                <a href="/#services">
-                  <strong>รับทำเว็บไซต์ / UX-UI</strong>
-                  <span>ใช้งานง่าย โหลดไว SEO Score พุ่งสูง</span>
-                </a>
-                <a href="/#services">
-                  <strong>รับทำวีดีโอเอไอ</strong>
-                  <span>วิดีโอ AI คุณภาพสูง พร้อมทำคอนเทนต์ให้ติด SEO</span>
-                </a>
-                <a href="/#services">
-                  <strong>กราฟิกดีไซน์</strong>
-                  <span>โลโก้ · CI · Ads Banner · Packaging</span>
-                </a>
-                <a href="/#services">
-                  <strong>Smart Design</strong>
-                  <span>เราออกแบบให้ คุณแก้ไขเนื้อหาเองได้ง่าย</span>
-                </a>
-              </div>
-            </li>
-            <li>
-              <a className="nav-link" href="/#pricing">แพ็กเกจ</a>
-            </li>
             <li>
               <a className="nav-link" href="/portfolio">ผลงาน</a>
             </li>
