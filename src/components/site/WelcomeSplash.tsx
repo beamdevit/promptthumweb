@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 type Slide =
   | { kind: 'logo' }
   | { kind: 'message'; heading: string; text: string }
+  | { kind: 'showreel' }
 
 const slides: Slide[] = [
   { kind: 'logo' },
@@ -13,7 +14,11 @@ const slides: Slide[] = [
     heading: 'อย่าให้ไอเดียของคุณอยู่แค่ในความคิด',
     text: 'รับทำเว็บไซต์ รองรับ SEO และทุกอุปกรณ์ · กราฟิกดีไซน์ · สื่อโซเชียลมีเดียและสื่อสิ่งพิมพ์',
   },
+  { kind: 'showreel' },
 ]
+
+const SHOWREEL_YOUTUBE_URL =
+  'https://www.youtube-nocookie.com/embed/VkhxFQPyGsg?autoplay=1&mute=1&loop=1&playlist=VkhxFQPyGsg&playsinline=1&rel=0&controls=0'
 
 export function WelcomeSplash() {
   const [index, setIndex] = useState(0)
@@ -50,10 +55,23 @@ export function WelcomeSplash() {
         {slide.kind === 'logo' ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img className="splash-logo" src="/assets/logo.png" alt="Promptthum — Ready to do" />
-        ) : (
+        ) : slide.kind === 'message' ? (
           <div className="splash-message">
             <h1>{slide.heading}</h1>
             <p>{slide.text}</p>
+          </div>
+        ) : (
+          <div className="splash-showreel">
+            <p>OUR SHOWREEL</p>
+            <div className="splash-video-frame">
+              <iframe
+                src={SHOWREEL_YOUTUBE_URL}
+                title="Promptthum showreel"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+              <span className="splash-video-label">AUTOPLAY · LOOP</span>
+            </div>
           </div>
         )}
       </div>
