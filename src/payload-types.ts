@@ -91,8 +91,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-video': SiteVideo;
+  };
+  globalsSelect: {
+    'site-video': SiteVideoSelect<false> | SiteVideoSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -533,6 +537,29 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-video".
+ */
+export interface SiteVideo {
+  id: number;
+  /**
+   * ใช้ร่วมกันในหน้า Welcome และหน้าแรก รองรับ YouTube, Shorts และ youtu.be บันทึกแล้วรีเฟรชหน้าเว็บไซต์เพื่อดูผล
+   */
+  youtubeUrl: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-video_select".
+ */
+export interface SiteVideoSelect<T extends boolean = true> {
+  youtubeUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

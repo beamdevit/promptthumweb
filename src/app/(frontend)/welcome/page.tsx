@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 
 import { CookieConsent } from '@/components/site/CookieConsent'
 import { WelcomeSplash } from '@/components/site/WelcomeSplash'
+import { getSiteVideoId } from '@/lib/site-video'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'ยินดีต้อนรับ · Promptthum',
@@ -10,10 +13,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 }
 
-export default function WelcomePage() {
+export default async function WelcomePage() {
+  const videoId = await getSiteVideoId()
   return (
     <>
-      <WelcomeSplash />
+      <WelcomeSplash videoId={videoId} />
       <CookieConsent />
     </>
   )

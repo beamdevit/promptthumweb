@@ -1,3 +1,5 @@
+import { SiteShowreel } from '@/components/site/SiteShowreel'
+import { getSiteVideoId } from '@/lib/site-video'
 import { HomeShowcase } from '@/components/site/HomeShowcase'
 import { ContactForm } from '@/components/site/ContactForm'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
@@ -44,11 +46,10 @@ const companyHistory = [
   'เราเชื่อว่าการออกแบบที่ดีไม่ควรเป็นเรื่องไกลตัวสำหรับธุรกิจใด ๆ และทุกธุรกิจควรมีโอกาสเข้าถึงงานออกแบบที่มีคุณภาพ เพื่อสร้างความน่าเชื่อถือ สื่อสารตัวตนของแบรนด์ และเติบโตไปพร้อมกับธุรกิจของตนเอง',
 ]
 
-const VIDEO_BASE =
-  'https://corpusx.bol.co.th/static/corpusx/videos/cpx_website_edit_9feb2026_v2'
+
 
 export default async function HomePage() {
-  const featuredWork = await getFeaturedPortfolio(3)
+  const [featuredWork, videoId] = await Promise.all([getFeaturedPortfolio(3), getSiteVideoId()])
 
   return (
     <>
@@ -68,42 +69,7 @@ export default async function HomePage() {
                 <a className="btn btn-outline" href="#contact">คุยกับทีม</a>
               </div>
             </div>
-            <div className="hero-demo-card">
-              <div className="hero-demo-band">
-                <h3>ตัวอย่างผลงานเว็บไซต์</h3>
-                <p>ดูเว็บไซต์ตัวอย่างที่เราออกแบบและพัฒนาจริง</p>
-              </div>
-              <div className="hero-demo-body">
-                <div className="browser-mock">
-                  <div className="browser-mock-bar">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <div className="browser-mock-url">promptthum.com</div>
-                  </div>
-                  <div className="browser-mock-body">
-                    <video
-                      style={{
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                        width: '100%',
-                        objectFit: 'cover',
-                        objectPosition: '50% 50%',
-                      }}
-                      disablePictureInPicture
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${VIDEO_BASE}/md.mp4`} media="(max-width: 1200px)" type="video/mp4" />
-                      <source src={`${VIDEO_BASE}/lg.mp4`} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SiteShowreel videoId={videoId} />
           </div>
         </section>
 
