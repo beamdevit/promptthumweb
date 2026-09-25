@@ -1,6 +1,7 @@
 import * as migration_20260911_205201_initial from './20260911_205201_initial';
 import * as migration_20260912_104216_portfolio from './20260912_104216_portfolio';
 import * as siteVideo from './20260925_000000_site_video';
+import * as premiumVideo from './20260925_010000_premium_video';
 
 export const migrations = [
   {
@@ -14,4 +15,5 @@ export const migrations = [
     name: '20260912_104216_portfolio'
   },
   { up: siteVideo.up, down: siteVideo.down, name: '20260925_000000_site_video' },
+  { up: premiumVideo.up, down: premiumVideo.down, name: '20260925_010000_premium_video' },
 ];

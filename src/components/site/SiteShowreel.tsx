@@ -1,8 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { PremiumVideo } from './PremiumVideo'
+import { YouTubeShowreel } from './YouTubeShowreel'
 
-export function SiteShowreel({ videoId }: { videoId: string }) {
+export function SiteShowreel({ videoId, videoUrl, poster }: { videoId: string; videoUrl?: string; poster?: string }) {
   const track = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -34,12 +36,7 @@ export function SiteShowreel({ videoId }: { videoId: string }) {
     <div className="site-showreel" ref={track}>
       <div className="site-showreel-stage">
       <div className="site-showreel-frame">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&playsinline=1&rel=0`}
-          title="Promptthum showreel"
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-          allowFullScreen
-        />
+        {videoUrl ? <PremiumVideo videoUrl={videoUrl} poster={poster} /> : <YouTubeShowreel videoId={videoId} />}
       </div>
       </div>
     </div>

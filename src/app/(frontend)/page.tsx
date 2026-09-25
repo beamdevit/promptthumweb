@@ -1,5 +1,5 @@
 import { SiteShowreel } from '@/components/site/SiteShowreel'
-import { getSiteVideoId } from '@/lib/site-video'
+import { getSiteVideo } from '@/lib/site-video'
 import { HomeShowcase } from '@/components/site/HomeShowcase'
 import { ContactForm } from '@/components/site/ContactForm'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
@@ -49,7 +49,7 @@ const companyHistory = [
 
 
 export default async function HomePage() {
-  const [featuredWork, videoId] = await Promise.all([getFeaturedPortfolio(3), getSiteVideoId()])
+  const [featuredWork, video] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo()])
 
   return (
     <>
@@ -69,7 +69,7 @@ export default async function HomePage() {
                 <a className="btn btn-outline" href="#contact">คุยกับทีม</a>
               </div>
             </div>
-            <SiteShowreel videoId={videoId} />
+            <SiteShowreel {...video} />
           </div>
         </section>
 

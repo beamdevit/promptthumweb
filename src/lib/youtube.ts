@@ -1,4 +1,4 @@
-export const DEFAULT_YOUTUBE_URL = 'https://www.youtube.com/shorts/VkhxFQPyGsg'
+export const DEFAULT_YOUTUBE_URL = 'https://www.youtube.com/watch?v=N7hJKEvta-U'
 export function youtubeId(value: string): string | null {
   try {
     const url = new URL(value)

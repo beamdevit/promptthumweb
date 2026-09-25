@@ -548,6 +548,11 @@ export interface SiteVideo {
    * ใช้ร่วมกันในหน้า Welcome และหน้าแรก รองรับ YouTube, Shorts และ youtu.be บันทึกแล้วรีเฟรชหน้าเว็บไซต์เพื่อดูผล
    */
   youtubeUrl: string;
+  /**
+   * ใส่ URL ไฟล์วิดีโอโดยตรงเพื่อใช้ตัวเล่น HTML5 ถ้าเว้นว่างจะใช้ YouTube ด้านบน
+   */
+  videoUrl?: string | null;
+  posterUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -557,6 +562,8 @@ export interface SiteVideo {
  */
 export interface SiteVideoSelect<T extends boolean = true> {
   youtubeUrl?: T;
+  videoUrl?: T;
+  posterUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
