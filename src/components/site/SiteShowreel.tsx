@@ -15,10 +15,13 @@ export function SiteShowreel({ videoId, videoUrl, poster }: { videoId: string; v
     const update = () => {
       frame = 0
       const mobile = window.matchMedia('(max-width:760px)').matches
-      const distance = window.innerHeight * (mobile ? 0.55 : 0.8)
+      if (mobile || reducedMotion.matches) {
+        element.style.setProperty('--showreel-scale', '1')
+        return
+      }
+      const distance = window.innerHeight * 0.8
       const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.15 - element.getBoundingClientRect().top) / distance))
-      const startScale = mobile ? 0.86 : 0.5
-      element.style.setProperty('--showreel-scale', String(reducedMotion.matches ? 1 : startScale + progress * (1 - startScale)))
+      element.style.setProperty('--showreel-scale', String(0.5 + progress * 0.5))
     }
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
     update()
