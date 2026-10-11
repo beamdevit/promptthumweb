@@ -14,10 +14,11 @@ export function SiteShowreel({ videoId, videoUrl, poster }: { videoId: string; v
     let frame = 0
     const update = () => {
       frame = 0
-      const distance = window.innerHeight * 0.45
-      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.1 - element.getBoundingClientRect().top) / distance))
-      element.style.setProperty('--showreel-scale', String(reducedMotion.matches ? 1 : 0.8 + progress * 0.2))
-      element.style.setProperty('--showreel-radius', `${reducedMotion.matches ? 30 : 30 - progress * 18}px`)
+      const mobile = window.matchMedia('(max-width:760px)').matches
+      const distance = window.innerHeight * (mobile ? 0.55 : 0.8)
+      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.15 - element.getBoundingClientRect().top) / distance))
+      const startScale = mobile ? 0.86 : 0.5
+      element.style.setProperty('--showreel-scale', String(reducedMotion.matches ? 1 : startScale + progress * (1 - startScale)))
     }
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
     update()
@@ -36,7 +37,7 @@ export function SiteShowreel({ videoId, videoUrl, poster }: { videoId: string; v
     <div className="site-showreel" ref={track}>
       <div className="site-showreel-stage">
       <div className="site-showreel-frame">
-        {videoUrl ? <PremiumVideo videoUrl={videoUrl} poster={poster} /> : <YouTubeShowreel videoId={videoId} />}
+        {videoUrl ? <PremiumVideo videoUrl={videoUrl} poster={poster} scale={1} showreelText="PLAY SHOWREEL" /> : <YouTubeShowreel videoId={videoId} />}
       </div>
       </div>
     </div>

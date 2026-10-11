@@ -49,9 +49,9 @@ export function YouTubeShowreel({ videoId }: { videoId: string }) {
     }).catch(() => { if (!disposed) setError(true) })
     return () => { disposed = true; clearTimeout(readyTimeout); player.current?.destroy(); player.current = null }
   }, [videoId])
-  return <PremiumVideoShell>
-    <div ref={mount} style={{ width: '100%', height: '100%' }} />
-    <GlassPlayButton playing={playing} disabled={!ready || error} onToggle={() => playing ? player.current?.pauseVideo() : player.current?.playVideo()} />
+  return <PremiumVideoShell scale={1}>
+    <div ref={mount} className="showreel-youtube-viewport" />
+    <GlassPlayButton playing={playing} label="PLAY SHOWREEL" disabled={!ready || error} onToggle={() => playing ? player.current?.pauseVideo() : player.current?.playVideo()} />
     {error && <div className="premium-video-message" role="status">ไม่สามารถเล่นวิดีโอได้ <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline' }}>เปิดใน YouTube</a></div>}
   </PremiumVideoShell>
 }
