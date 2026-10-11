@@ -541,7 +541,7 @@ section h2{font-size:clamp(24px,3vw,32px)}
 }
 
 /* Shared showreel: the same dimensions and video on both public pages. */
-.site-showreel{--showreel-scale:.5;width:min(1160px,calc(100vw - 40px));flex-shrink:0;height:175svh;text-align:center;margin-inline:auto;align-self:center}
+.site-showreel{--showreel-scale:.5;width:min(1160px,calc(100vw - 40px));flex-shrink:0;height:175svh;text-align:center;margin-inline:0;align-self:center}
 .site-showreel-stage{position:sticky;top:120px;height:calc(100svh - 144px);display:flex;align-items:center;justify-content:center}
 .site-showreel-frame{position:relative;width:100%;aspect-ratio:49/36;max-height:calc(100svh - 160px);transform:perspective(1200px) scale(var(--showreel-scale));will-change:transform;overflow:hidden;border-radius:30px;background:#0c0c0c}
 .site-showreel .premium-control svg{width:32px;height:32px}
