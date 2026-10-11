@@ -5,6 +5,7 @@ import {
     type CSSProperties,
     type KeyboardEvent,
     type ReactNode,
+    type TouchEvent,
     useCallback,
     useEffect,
     useId,
@@ -187,6 +188,8 @@ export function SqueezeCarousel({
     const strip = useRef<HTMLDivElement>(null);
     const moving = useRef(false);
     const keyboardFocus = useRef(false);
+    const touchStart = useRef<{ x: number; y: number } | null>(null);
+    const suppressClickUntil = useRef(0);
 
     /* --- the strip -------------------------------------------------------- */
 
@@ -316,6 +319,36 @@ export function SqueezeCarousel({
         return () => clearTimeout(timer);
     }, [autoplay, paused, reduced, count, open, interval, step]);
 
+    /* --- touch ------------------------------------------------------------ */
+
+    const onTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+        suppressClickUntil.current = 0;
+        touchStart.current = event.touches.length === 1 && !moving.current
+            ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+            : null;
+        setHover(-1);
+    };
+
+    const onTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+        if (event.touches.length !== 1) touchStart.current = null;
+    };
+
+    const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+        const start = touchStart.current;
+        touchStart.current = null;
+        if (!start || !event.changedTouches.length) return;
+        const dx = event.changedTouches[0].clientX - start.x;
+        const dy = event.changedTouches[0].clientY - start.y;
+        // A swipe must be intentional and predominantly horizontal. Native
+        // vertical scrolling and pinch zoom remain available over the images.
+        if (Math.max(Math.abs(dx), Math.abs(dy)) > 10) {
+            suppressClickUntil.current = Date.now() + 500;
+        }
+        if (Math.abs(dx) >= 35 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+            step(dx < 0 ? 1 : -1);
+        }
+    };
+
     /* --- keyboard --------------------------------------------------------- */
 
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -396,7 +429,20 @@ export function SqueezeCarousel({
                 </div>
             )}
 
-            <div className="w-full overflow-hidden" style={{ height: "var(--sq-h)" }}>
+            <div
+                className="w-full overflow-hidden"
+                style={{ height: "var(--sq-h)", touchAction: "pan-y pinch-zoom" }}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onTouchCancel={() => { touchStart.current = null; }}
+                onClickCapture={(event) => {
+                    if (event.detail !== 0 && Date.now() < suppressClickUntil.current) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }}
+            >
                 <div
                     ref={strip}
                     role="tablist"
