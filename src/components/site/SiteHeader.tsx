@@ -27,7 +27,7 @@ export function SiteHeader() {
               <a className="nav-link" href="/portfolio">ผลงาน</a>
             </li>
             <li>
-              <a className="nav-link" href="/#articles">บทความ</a>
+              <a className="nav-link" href="/articles">บทความ</a>
             </li>
           </ul>
         </nav>

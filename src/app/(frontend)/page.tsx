@@ -1,3 +1,5 @@
+import { ArticleCard } from '@/components/site/ArticleCard'
+import { getArticles } from '@/lib/articles'
 import { SiteShowreel } from '@/components/site/SiteShowreel'
 import { getSiteVideo } from '@/lib/site-video'
 import { HomeShowcase } from '@/components/site/HomeShowcase'
@@ -11,33 +13,6 @@ import { getFeaturedPortfolio } from '@/lib/portfolio'
 // reachable during the build, so these pages must not be prerendered.
 export const dynamic = 'force-dynamic'
 
-const articles = [
-  {
-    tag: 'บทความ',
-    title: 'ผลงานออกแบบโลโก้สำหรับร้านค้า',
-    meta: '15 กันยายน 2023',
-    tags: ['โลโก้', 'แบรนด์ดิ้ง', 'กราฟิก'],
-  },
-  {
-    tag: 'เทคนิค SEO',
-    title: '5 เทคนิค SEO ที่ธุรกิจขนาดเล็กควรรู้',
-    meta: 'บทความ · เทคนิค SEO',
-    tags: ['seo', 'on-page', 'growth'],
-  },
-  {
-    tag: 'UX/UI',
-    title: 'ทำไม UX/UI ที่ดีถึงช่วยเพิ่มยอดขาย',
-    meta: 'บทความ · UX/UI',
-    tags: ['ux-ui', 'design', 'conversion'],
-  },
-  {
-    tag: 'Ads Banner',
-    title: 'เทคนิคทำ Ads Banner ให้คนคลิกจนหยุดไม่ได้',
-    meta: 'บทความ · กราฟิกดีไซน์',
-    tags: ['ads-banner', 'graphic', 'marketing'],
-  },
-]
-
 const companyHistory = [
   'บริษัท พร้อมพ์ทำ จำกัด ก่อตั้งขึ้นจากความตั้งใจของทีมงานที่ต้องการนำความรู้และประสบการณ์ด้านการออกแบบกราฟิกและการตลาดออนไลน์ มาช่วยให้ธุรกิจสามารถสร้างภาพลักษณ์ที่ดีและสื่อสารกับกลุ่มลูกค้าได้อย่างมีประสิทธิภาพ โดยเฉพาะธุรกิจขนาดเล็กและผู้ที่กำลังเริ่มต้นทำธุรกิจ',
   'ในช่วงเริ่มต้น บริษัทมุ่งเน้นการให้บริการด้านงานออกแบบกราฟิกเป็นหลัก ก่อนที่จะพัฒนาการให้บริการให้ครอบคลุมมากยิ่งขึ้น ทั้งการออกแบบสื่อประชาสัมพันธ์ การออกแบบแบรนด์ดิ้ง การออกแบบเว็บไซต์ การทำคอนเทนต์ และการตลาดออนไลน์ เพื่อให้ลูกค้าสามารถวางแผนและดำเนินงานด้านการสื่อสารการตลาดได้อย่างครบวงจรภายใต้ทีมงานเดียว',
@@ -49,7 +24,7 @@ const companyHistory = [
 
 
 export default async function HomePage() {
-  const [featuredWork, video] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo()])
+  const [featuredWork, video, articles] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4)])
 
   return (
     <>
@@ -118,30 +93,11 @@ export default async function HomePage() {
                 <h2>บทความ</h2>
                 <p className="section-sub">อัปเดตความรู้ด้านการตลาดออนไลน์และงานออกแบบเว็บไซต์</p>
               </div>
-              <a className="see-all" href="#articles">ดูทั้งหมด →</a>
+              <a className="see-all" href="/articles">ดูทั้งหมด →</a>
             </div>
+            {articles.docs.length === 0 && <p className="articles-empty">เตรียมพบกับบทความและไอเดียใหม่ ๆ จาก Promptthum</p>}
             <div className="articles-grid">
-              {articles.map((article) => (
-                <a className="article-card" href="#articles" key={article.title}>
-                  <div className="article-thumb">
-                    <span className="article-thumb-logo">promptthum</span>
-                    <div className="article-thumb-overlay">
-                      <span className="article-thumb-tag">{article.tag}</span>
-                      <div className="article-thumb-title">{article.title}</div>
-                    </div>
-                  </div>
-                  <div className="article-body">
-                    <time>{article.meta}</time>
-                    <h3>{article.title}</h3>
-                    <div className="article-tags">
-                      {article.tags.map((tag) => (
-                        <span className="tag" key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                    <span className="read-more">อ่านต่อ →</span>
-                  </div>
-                </a>
-              ))}
+              {articles.docs.map(article => <ArticleCard key={article.id} article={article} />)}
             </div>
           </div>
         </section>

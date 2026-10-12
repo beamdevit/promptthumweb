@@ -11,6 +11,7 @@ import { Media } from './collections/Media'
 import { Portfolio } from './collections/Portfolio'
 import { Users } from './collections/Users'
 import { SiteVideo } from './globals/SiteVideo'
+import { Articles } from './collections/Articles'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -26,7 +27,7 @@ export default buildConfig({
       beforeNavLinks: ['@/components/admin/AdminBrand#AdminBrand'],
     },
   },
-  collections: [Leads, Portfolio, Media, Users],
+  collections: [Leads, Articles, Portfolio, Media, Users],
   globals: [SiteVideo],
   editor: lexicalEditor(),
   db: postgresAdapter({

@@ -16,7 +16,7 @@ export function SiteFooter() {
           <a href="/">MAIN</a>
           <a href="/portfolio">Portfolio</a>
           <a href="/#about">About</a>
-          <a href="/#articles">Blog</a>
+          <a href="/articles">Blog</a>
         </div>
       </div>
     </footer>
