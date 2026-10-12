@@ -1,5 +1,6 @@
 import { ArticleCard } from '@/components/site/ArticleCard'
 import { getArticles } from '@/lib/articles'
+import { getSiteContact } from '@/lib/site-contact'
 import { SiteShowreel } from '@/components/site/SiteShowreel'
 import { getSiteVideo } from '@/lib/site-video'
 import { HomeShowcase } from '@/components/site/HomeShowcase'
@@ -24,7 +25,7 @@ const companyHistory = [
 
 
 export default async function HomePage() {
-  const [featuredWork, video, articles] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4)])
+  const [featuredWork, video, articles, contact] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact()])
 
   return (
     <>
@@ -115,13 +116,14 @@ export default async function HomePage() {
             <aside className="contact-side">
               <h3>ติดต่อเรา</h3>
               <div className="cta-band">
-                <a className="btn btn-ink btn-sm" href="#contact">แอด LINE</a>
+                {contact.lineUrl && <a className="btn btn-ink btn-sm" href={contact.lineUrl} target="_blank" rel="noopener noreferrer">แอด LINE</a>}
                 <a className="btn btn-outline btn-sm" href="tel:+66000000000">โทรเลย</a>
               </div>
               <p className="contact-channels">LINE OA / Facebook / IG / TikTok</p>
-              <div className="qr-box placeholder-fill" aria-hidden="true">
-                <span>QR LINE</span>
-              </div>
+              {contact.qr?.url && <figure className="contact-line-qr">
+                <img src={contact.qr.url} alt={contact.qr.alt || 'QR Code เพิ่มเพื่อน LINE ของ Promptthum'} loading="lazy" />
+                <figcaption>สแกนเพื่อเพิ่มเพื่อนบน LINE</figcaption>
+              </figure>}
             </aside>
           </div>
         </section>

@@ -95,9 +95,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-video': SiteVideo;
+    'site-contact': SiteContact;
   };
   globalsSelect: {
     'site-video': SiteVideoSelect<false> | SiteVideoSelect<true>;
+    'site-contact': SiteContactSelect<false> | SiteContactSelect<true>;
   };
   locale: null;
   widgets: {
@@ -612,13 +614,15 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome ได้ที่นี่ วางลิงก์ใหม่แล้วกด Save เพื่อใช้กับทั้งสองหน้า หากต้องการใช้ YouTube ให้เว้นช่องไฟล์ MP4 / WebM ว่าง
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-video".
  */
 export interface SiteVideo {
   id: number;
   /**
-   * ใช้ร่วมกันในหน้า Welcome และหน้าแรก รองรับ YouTube, Shorts และ youtu.be บันทึกแล้วรีเฟรชหน้าเว็บไซต์เพื่อดูผล
+   * รองรับ youtube.com/watch, YouTube Shorts และ youtu.be วางลิงก์แล้วกด Save จากนั้นรีเฟรชหน้าเว็บไซต์เพื่อดูผล
    */
   youtubeUrl: string;
   /**
@@ -630,6 +634,25 @@ export interface SiteVideo {
   createdAt?: string | null;
 }
 /**
+ * ตั้งค่าปุ่มแอด LINE และภาพ QR ในส่วนติดต่อเราของหน้าแรก แล้วกด Save เพื่อแสดงบนเว็บไซต์
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-contact".
+ */
+export interface SiteContact {
+  id: number;
+  /**
+   * ตัวอย่าง https://lin.ee/xxxx หรือ https://line.me/R/ti/p/@ชื่อบัญชี
+   */
+  lineUrl?: string | null;
+  /**
+   * อัปโหลดภาพ QR จากบัญชี LINE ของคุณ แนะนำภาพสี่เหลี่ยมจัตุรัสที่มีขอบขาวครบ เพื่อให้สแกนได้ชัดเจน
+   */
+  lineQr?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-video_select".
  */
@@ -637,6 +660,17 @@ export interface SiteVideoSelect<T extends boolean = true> {
   youtubeUrl?: T;
   videoUrl?: T;
   posterUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-contact_select".
+ */
+export interface SiteContactSelect<T extends boolean = true> {
+  lineUrl?: T;
+  lineQr?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -572,3 +572,6 @@ section h2{font-size:clamp(24px,3vw,32px)}
   .splash.splash--video{padding:56px 0 36px;gap:44px}
 }
 @media(prefers-reduced-motion:reduce){.site-showreel{height:auto;--showreel-scale:1}.site-showreel-stage{position:relative;top:auto}.site-showreel-frame{transform:none;will-change:auto}}
+.contact-line-qr{margin:18px 0 0;max-width:260px;padding:16px;background:#fff;border-radius:12px;color:#004392;text-align:center}
+.contact-line-qr img{display:block;width:100%;height:auto;object-fit:contain}
+.contact-line-qr figcaption{font-size:13px;line-height:1.5;margin-top:12px}
