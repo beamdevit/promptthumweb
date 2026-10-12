@@ -14,6 +14,7 @@ import { Users } from './collections/Users'
 import { SiteVideo } from './globals/SiteVideo'
 import { Articles } from './collections/Articles'
 import { SiteContact } from './globals/SiteContact'
+import { SiteBranding } from './globals/SiteBranding'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -39,7 +40,7 @@ export default buildConfig({
   },
   i18n: { supportedLanguages: { th }, fallbackLanguage: 'th' },
   collections: [Leads, Articles, Portfolio, Media, Users],
-  globals: [SiteVideo, SiteContact],
+  globals: [SiteBranding, SiteVideo, SiteContact],
   editor: lexicalEditor(),
   db: postgresAdapter({
     // Railway's Postgres plugin injects DATABASE_URL; DATABASE_URI lets us override it.

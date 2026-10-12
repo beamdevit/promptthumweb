@@ -1,10 +1,11 @@
-import * as migration_20260911_205201_initial from './20260911_205201_initial'
-import * as migration_20260912_104216_portfolio from './20260912_104216_portfolio'
-import * as migration_20260925_000000_site_video from './20260925_000000_site_video'
-import * as migration_20260925_010000_premium_video from './20260925_010000_premium_video'
-import * as migration_20261012_054738_articles from './20261012_054738_articles'
-import * as migration_20261012_061442_site_contact from './20261012_061442_site_contact'
-import * as migration_20261012_184253_admin_usability from './20261012_184253_admin_usability'
+import * as migration_20260911_205201_initial from './20260911_205201_initial';
+import * as migration_20260912_104216_portfolio from './20260912_104216_portfolio';
+import * as migration_20260925_000000_site_video from './20260925_000000_site_video';
+import * as migration_20260925_010000_premium_video from './20260925_010000_premium_video';
+import * as migration_20261012_054738_articles from './20261012_054738_articles';
+import * as migration_20261012_061442_site_contact from './20261012_061442_site_contact';
+import * as migration_20261012_184253_admin_usability from './20261012_184253_admin_usability';
+import * as migration_20261012_190133_site_branding from './20261012_190133_site_branding';
 
 export const migrations = [
   {
@@ -42,4 +43,9 @@ export const migrations = [
     down: migration_20261012_184253_admin_usability.down,
     name: '20261012_184253_admin_usability',
   },
-]
+  {
+    up: migration_20261012_190133_site_branding.up,
+    down: migration_20261012_190133_site_branding.down,
+    name: '20261012_190133_site_branding'
+  },
+];

@@ -2,6 +2,7 @@
 
 import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
 import { usePathname } from 'next/navigation'
+import { SiteLogo } from './SiteLogo'
 
 
 import { useEffect, useState } from 'react'
@@ -23,8 +24,7 @@ export function SiteHeader() {
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`} id="top">
       <div className="wrap header-inner">
         <a className="logo" href="/" aria-label="Promptthum">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/logo.png" alt="Promptthum" />
+          <SiteLogo priority />
         </a>
 
         <nav className={`main-nav${menuOpen ? ' is-open' : ''}`} id="main-nav" aria-label={t('เมนูหลัก')}>

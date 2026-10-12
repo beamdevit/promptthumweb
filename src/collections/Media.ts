@@ -8,7 +8,7 @@ export const Media: CollectionConfig = {
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'mimeType', 'updatedAt'],
     description:
-      'อัปโหลดรูปหรือวิดีโอ แล้วนำไปเลือกใช้ในบทความ ผลงาน หรือ QR ติดต่อเรา',
+      'อัปโหลดรูปหรือวิดีโอ แล้วนำไปเลือกใช้ในบทความ ผลงาน โลโก้ หรือ QR ติดต่อเรา',
   },
   access: {
     read: () => true,

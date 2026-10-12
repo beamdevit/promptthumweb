@@ -12,6 +12,7 @@ export type DashboardData = {
   videoReady: boolean
   lineReady: boolean
   qrReady: boolean
+  customLogo: boolean
 }
 
 const tasks = [
@@ -38,6 +39,13 @@ const tasks = [
     href: '/admin/collections/media',
     create: '/admin/collections/media/create',
     action: 'อัปโหลดไฟล์',
+  },
+  {
+    title: 'โลโก้เว็บไซต์',
+    description: 'เปลี่ยนโลโก้ในเมนู หน้า Welcome และประวัติบริษัท',
+    icon: 'P',
+    href: '/admin/globals/site-branding',
+    action: 'เปลี่ยนโลโก้',
   },
   {
     title: 'วิดีโอเว็บไซต์',
@@ -214,8 +222,16 @@ export function DashboardOverview({ data }: { data: DashboardData }) {
         </section>
         <aside className="pt-side-cards">
           <section className="pt-card">
-            <h2>ข้อมูลติดต่อและวิดีโอ</h2>
+            <h2>ตั้งค่าเว็บไซต์</h2>
             <ul className="pt-settings-list">
+              <li>
+                <a href="/admin/globals/site-branding">
+                  <span>โลโก้เว็บไซต์</span>
+                  <span className="pt-status">
+                    {data.customLogo ? 'กำหนดเอง' : 'ใช้โลโก้เดิม'}
+                  </span>
+                </a>
+              </li>
               <li>
                 <a href="/admin/globals/site-video">
                   <span>วิดีโอเว็บไซต์</span>

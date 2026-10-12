@@ -94,10 +94,12 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    'site-branding': SiteBranding;
     'site-video': SiteVideo;
     'site-contact': SiteContact;
   };
   globalsSelect: {
+    'site-branding': SiteBrandingSelect<false> | SiteBrandingSelect<true>;
     'site-video': SiteVideoSelect<false> | SiteVideoSelect<true>;
     'site-contact': SiteContactSelect<false> | SiteContactSelect<true>;
   };
@@ -238,7 +240,7 @@ export interface Article {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * อัปโหลดรูปหรือวิดีโอ แล้วนำไปเลือกใช้ในบทความ ผลงาน หรือ QR ติดต่อเรา
+ * อัปโหลดรูปหรือวิดีโอ แล้วนำไปเลือกใช้ในบทความ ผลงาน โลโก้ หรือ QR ติดต่อเรา
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -632,6 +634,25 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * เปลี่ยนโลโก้ในเมนูด้านบน หน้า Welcome และส่วนประวัติบริษัท แล้วกดบันทึกเพื่อแสดงบนเว็บไซต์
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-branding".
+ */
+export interface SiteBranding {
+  id: number;
+  /**
+   * เลือกจากคลังสื่อหรืออัปโหลดใหม่ แนะนำ PNG หรือ WebP พื้นหลังโปร่งใสที่เห็นชัดบนพื้นสีน้ำเงิน ใช้ภาพเต็มโดยไม่ตัดขอบ หากล้างช่องนี้จะกลับไปใช้โลโก้เดิม
+   */
+  logo?: (number | null) | Media;
+  /**
+   * ข้อความสำหรับผู้ใช้โปรแกรมอ่านหน้าจอ เช่น “โลโก้ Promptthum”
+   */
+  logoAlt?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome วางลิงก์แล้วกดบันทึก หากใส่ไฟล์ MP4 / WebM ระบบจะใช้ไฟล์นั้นแทน YouTube
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -672,6 +693,17 @@ export interface SiteContact {
   lineQr?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-branding_select".
+ */
+export interface SiteBrandingSelect<T extends boolean = true> {
+  logo?: T;
+  logoAlt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

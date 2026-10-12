@@ -9,6 +9,7 @@ import { ContactForm } from '@/components/site/ContactForm'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
+import { SiteLogo } from '@/components/site/SiteLogo'
 import { getFeaturedPortfolio } from '@/lib/portfolio'
 
 // Rendered per request: Railway's private network (and so Postgres) is not
@@ -62,8 +63,7 @@ export default async function HomePage() {
           <div className="wrap">
             <div className="about-card">
               <div className="about-logo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/logo.png" alt="Promptthum" />
+                <SiteLogo />
               </div>
               <div className="about-body">
                 <span className="about-eyebrow">ABOUT US</span>

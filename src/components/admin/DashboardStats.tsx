@@ -19,6 +19,7 @@ export async function DashboardStats({ initPageResult }: AdminViewServerProps) {
       recent,
       video,
       contact,
+      branding,
     ] = await Promise.all([
       payload.count({ ...access, collection: 'leads' }),
       payload.count({
@@ -56,6 +57,7 @@ export async function DashboardStats({ initPageResult }: AdminViewServerProps) {
       }),
       payload.findGlobal({ ...access, slug: 'site-video', depth: 0 }),
       payload.findGlobal({ ...access, slug: 'site-contact', depth: 0 }),
+      payload.findGlobal({ ...access, slug: 'site-branding', depth: 0 }),
     ])
     return (
       <DashboardOverview
@@ -71,6 +73,7 @@ export async function DashboardStats({ initPageResult }: AdminViewServerProps) {
           videoReady: Boolean(video.youtubeUrl || video.videoUrl),
           lineReady: Boolean(contact.lineUrl),
           qrReady: Boolean(contact.lineQr),
+          customLogo: Boolean(branding.logo),
         }}
       />
     )

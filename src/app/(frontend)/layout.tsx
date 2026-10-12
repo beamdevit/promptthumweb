@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import React from 'react'
 import { cookies } from 'next/headers'
 import { SiteLanguage } from '@/components/site/SiteLanguage'
+import { SiteBranding } from '@/components/site/SiteLogo'
+import { getSiteBranding } from '@/lib/site-branding'
 
 import './carousel-theme.css'
 import './styles.css'
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
   const locale = (await cookies()).get('site-language')?.value === 'en' ? 'en' : 'th'
+  const logo = await getSiteBranding()
   return (
     <html lang={locale}>
       <head>
@@ -24,7 +27,11 @@ export default async function FrontendLayout({ children }: { children: React.Rea
           rel="stylesheet"
         />
       </head>
-      <body><SiteLanguage initialLocale={locale}>{children}</SiteLanguage></body>
+      <body>
+        <SiteBranding logo={logo}>
+          <SiteLanguage initialLocale={locale}>{children}</SiteLanguage>
+        </SiteBranding>
+      </body>
     </html>
   )
 }

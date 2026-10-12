@@ -42,6 +42,51 @@ const { youtubeId, DEFAULT_YOUTUBE_URL } = await load('src/lib/youtube.ts')
 const { SiteVideo } = await load('src/globals/SiteVideo.ts', {
   '../lib/youtube': { youtubeId, DEFAULT_YOUTUBE_URL },
 })
+const { DEFAULT_SITE_LOGO } = await load('src/lib/site-logo.ts')
+let brandingSettings = {}
+const { getSiteBranding } = await load('src/lib/site-branding.ts', {
+  '@payload-config': { default: {} },
+  payload: {
+    getPayload: async () => ({
+      findGlobal: async (options) => {
+        assert.equal(options.slug, 'site-branding')
+        assert.equal(options.depth, 1)
+        assert.equal(options.overrideAccess, false)
+        return brandingSettings
+      },
+    }),
+  },
+  react: { cache: (fn) => fn },
+  './site-logo': { DEFAULT_SITE_LOGO },
+})
+
+test('website logos use the full image and safely restore the original for missing or cleared media', async () => {
+  for (const logo of [undefined, null, 42, { url: '/missing', mimeType: 'video/mp4' }]) {
+    brandingSettings = { logo }
+    assert.deepEqual(await getSiteBranding(), DEFAULT_SITE_LOGO)
+  }
+  brandingSettings = {
+    logo: {
+      url: '/api/media/file/full-logo.webp',
+      mimeType: 'image/webp',
+      alt: 'Uploaded logo',
+      width: 1200,
+      height: 300,
+      sizes: { thumbnail: { url: '/cropped-thumbnail.webp' } },
+    },
+    logoAlt: '  Promptthum new logo  ',
+  }
+  assert.deepEqual(await getSiteBranding(), {
+    src: '/api/media/file/full-logo.webp',
+    alt: 'Promptthum new logo',
+    width: 1200,
+    height: 300,
+  })
+  brandingSettings.logoAlt = ''
+  assert.equal((await getSiteBranding()).alt, 'Uploaded logo')
+  brandingSettings.logo = null
+  assert.deepEqual(await getSiteBranding(), DEFAULT_SITE_LOGO)
+})
 
 function flatten(fields) {
   return fields.flatMap((field) =>
