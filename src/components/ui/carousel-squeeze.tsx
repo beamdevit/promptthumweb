@@ -14,6 +14,7 @@ import {
     useState,
 } from "react";
 
+import { useSiteLanguage } from '@/components/site/SiteLanguage';
 import { cn } from "@/lib/utils";
 
 /* -------------------------------------------------------------------------- */
@@ -173,6 +174,7 @@ export function SqueezeCarousel({
     style,
     ...props
 }: SqueezeCarouselProps) {
+    const { t } = useSiteLanguage();
     const count = slides.length;
     const wrap = (i: number) => count ? ((i % count) + count) % count : 0;
 
@@ -424,8 +426,8 @@ export function SqueezeCarousel({
 
             {controls && count > 1 && (
                 <div className="mb-4 flex justify-end gap-2">
-                    <Arrow back label="สไลด์ก่อนหน้า" onClick={() => step(-1)} />
-                    <Arrow label="สไลด์ถัดไป" onClick={() => step(1)} />
+                    <Arrow back label={t('สไลด์ก่อนหน้า')} onClick={() => step(-1)} />
+                    <Arrow label={t('สไลด์ถัดไป')} onClick={() => step(1)} />
                 </div>
             )}
 

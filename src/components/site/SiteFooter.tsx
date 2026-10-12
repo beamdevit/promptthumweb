@@ -1,8 +1,9 @@
+import { T } from '@/components/site/SiteLanguage'
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="wrap footer-inner">
-        <div className="footer-brand">Promptthum · รับทำการตลาดออนไลน์ครบวงจร</div>
+        <div className="footer-brand"><T>Promptthum · รับทำการตลาดออนไลน์ครบวงจร</T></div>
         <div className="footer-social">
           <a href="/#top">FB</a>
           <a href="/#top">IG</a>

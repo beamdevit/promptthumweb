@@ -1,10 +1,14 @@
 'use client'
 
+import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
+
+
 import { useRef, useState, useTransition } from 'react'
 
 import { submitLead, type LeadFormState } from '@/app/(frontend)/actions'
 
 export function ContactForm() {
+  const { t } = useSiteLanguage()
   const formRef = useRef<HTMLFormElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<LeadFormState | null>(null)
@@ -33,14 +37,14 @@ export function ContactForm() {
 
   return (
     <form id="contact-form" ref={formRef} onSubmit={onSubmit} noValidate>
-      <label className="sr-only" htmlFor="cf-name">ชื่อ</label>
-      <input id="cf-name" ref={nameRef} name="name" type="text" placeholder="ชื่อ" required />
+      <label className="sr-only" htmlFor="cf-name"><T>ชื่อ</T></label>
+      <input id="cf-name" ref={nameRef} name="name" type="text" placeholder={t('ชื่อ')} required />
 
-      <label className="sr-only" htmlFor="cf-contact">อีเมล / เบอร์โทร</label>
-      <input id="cf-contact" name="contact" type="text" placeholder="อีเมล / เบอร์โทร" required />
+      <label className="sr-only" htmlFor="cf-contact"><T>อีเมล / เบอร์โทร</T></label>
+      <input id="cf-contact" name="contact" type="text" placeholder={t('อีเมล / เบอร์โทร')} required />
 
-<label className="sr-only" htmlFor="cf-detail">รายละเอียดงาน</label>
-      <textarea id="cf-detail" name="message" rows={3} placeholder="รายละเอียดงาน" />
+<label className="sr-only" htmlFor="cf-detail"><T>รายละเอียดงาน</T></label>
+      <textarea id="cf-detail" name="message" rows={3} placeholder={t('รายละเอียดงาน')} />
 
 
       {/* Honeypot: hidden from people, irresistible to bots. */}
@@ -50,10 +54,10 @@ export function ContactForm() {
       </div>
 
       <button className="btn btn-ink" type="submit" disabled={pending}>
-        {pending ? 'กำลังส่ง…' : 'ส่งข้อมูล'}
+        {t(pending ? 'กำลังส่ง…' : 'ส่งข้อมูล')}
       </button>
       <p className="form-status" id="form-status" role="status" aria-live="polite">
-        {status?.message ?? ''}
+        {t(status?.message ?? '')}
       </p>
     </form>
   )

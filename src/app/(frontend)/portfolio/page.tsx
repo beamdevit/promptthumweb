@@ -1,3 +1,4 @@
+import { T } from '@/components/site/SiteLanguage'
 import type { Metadata } from 'next'
 
 import { PORTFOLIO_CATEGORIES } from '@/collections/Portfolio'
@@ -31,27 +32,22 @@ export default async function PortfolioPage({ searchParams }: Props) {
         <section className="page-hero">
           <div className="wrap">
             <span className="page-hero-eyebrow">PORTFOLIO</span>
-            <h1>ผลงานของเรา</h1>
-            <p>
-              รวมงานออกแบบเว็บไซต์ กราฟิกดีไซน์ แบรนด์ดิ้ง และสื่อโฆษณาที่เราทำให้ลูกค้าจริง
-              เลือกดูตามหมวดที่สนใจได้เลย
-            </p>
+            <h1><T>ผลงานของเรา</T></h1>
+            <p><T>รวมงานออกแบบเว็บไซต์ กราฟิกดีไซน์ แบรนด์ดิ้ง และสื่อโฆษณาที่เราทำให้ลูกค้าจริง เลือกดูตามหมวดที่สนใจได้เลย</T></p>
           </div>
         </section>
 
         <section className="work-section">
           <div className="wrap">
             <nav className="work-filters" aria-label="กรองตามหมวดหมู่">
-              <a className={`work-filter${!active ? ' is-active' : ''}`} href="/portfolio">
-                ทั้งหมด
-              </a>
+              <a className={`work-filter${!active ? ' is-active' : ''}`} href="/portfolio"><T>ทั้งหมด</T></a>
               {PORTFOLIO_CATEGORIES.map((category) => (
                 <a
                   key={category.value}
                   className={`work-filter${active === category.value ? ' is-active' : ''}`}
                   href={`/portfolio?cat=${category.value}`}
                 >
-                  {category.label}
+                  <T>{category.label}</T>
                 </a>
               ))}
             </nav>
@@ -63,13 +59,12 @@ export default async function PortfolioPage({ searchParams }: Props) {
                 ))}
               </div>
             ) : active ? (
-              <p className="work-empty">
-                ยังไม่มีผลงานในหมวดนี้ — <a href="/portfolio">ดูผลงานทั้งหมด</a>
+              <p className="work-empty"><T>ยังไม่มีผลงานในหมวดนี้ —</T><a href="/portfolio"><T>ดูผลงานทั้งหมด</T></a>
               </p>
             ) : (
               <p className="work-empty">
-                กำลังจัดเตรียมผลงานเพื่อนำมาแสดง เร็ว ๆ นี้ —{' '}
-                <a href="/#contact">สนใจงานแบบไหน คุยกับทีมได้เลย</a>
+                <T>กำลังจัดเตรียมผลงานเพื่อนำมาแสดง เร็ว ๆ นี้ —</T>{' '}
+                <a href="/#contact"><T>สนใจงานแบบไหน คุยกับทีมได้เลย</T></a>
               </p>
             )}
           </div>
@@ -77,10 +72,10 @@ export default async function PortfolioPage({ searchParams }: Props) {
 
         <section className="work-cta">
           <div className="wrap">
-            <h2>มีงานในใจอยู่แล้ว?</h2>
-            <p>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.</p>
+            <h2><T>มีงานในใจอยู่แล้ว?</T></h2>
+            <p><T>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.</T></p>
             <div className="work-cta-actions">
-              <a className="btn btn-cta" href="/#contact">คุยกับทีม</a>
+              <a className="btn btn-cta" href="/#contact"><T>คุยกับทีม</T></a>
             </div>
           </div>
         </section>

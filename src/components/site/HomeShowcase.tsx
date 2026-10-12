@@ -1,9 +1,12 @@
 'use client'
 
+import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
+
+
 import { SqueezeCarousel, type SqueezeSlide } from '@/components/ui/carousel-squeeze'
 
 const photo = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=80`
-const mark = (label: string) => <span style={{ color: '#fff', fontSize: 'clamp(16px, 2cqi, 24px)', fontWeight: 600 }}>{label}</span>
+const mark = (label: string) => <span style={{ color: '#fff', fontSize: 'clamp(16px, 2cqi, 24px)', fontWeight: 600 }}><T>{label}</T></span>
 const slides: SqueezeSlide[] = [
   { id: 'website', title: 'เว็บไซต์ที่พร้อมเติบโตไปกับธุรกิจคุณ', description: 'ตั้งแต่หน้าแนะนำธุรกิจไปจนถึงเว็บไซต์ครบวงจร ออกแบบให้ใช้งานง่ายบนทุกอุปกรณ์', image: photo('photo-1460925895917-afdab827c52f'), imageAlt: 'หน้าจอคอมพิวเตอร์แสดงข้อมูลเว็บไซต์', overlay: mark('เว็บไซต์เพื่อธุรกิจ'), action: 'ปรึกษาเรื่องเว็บไซต์', href: '#contact' },
   { id: 'design', title: 'ดีไซน์ที่เล่าเรื่องแบรนด์ได้ชัดเจน', description: 'ออกแบบหน้าตาและประสบการณ์ใช้งาน ให้ลูกค้าค้นหาสิ่งที่ต้องการได้ง่าย', image: photo('photo-1558655146-d09347e92766'), imageAlt: 'โต๊ะทำงานออกแบบพร้อมตัวอย่างสีและอุปกรณ์', overlay: mark('UX / UI Design'), action: 'คุยเรื่องงานออกแบบ', href: '#contact' },
@@ -13,15 +16,17 @@ const slides: SqueezeSlide[] = [
 ]
 
 export function HomeShowcase() {
+  const { t } = useSiteLanguage()
+  const translatedSlides = slides.map(slide => ({ ...slide, title: t(slide.title || ''), description: t(slide.description || ''), imageAlt: t(slide.imageAlt || ''), action: t(slide.action || '') }))
   return (
     <section className="home-showcase" aria-labelledby="showcase-title">
       <div className="wrap">
         <div className="showcase-heading">
           <p className="showcase-eyebrow">PROMPTTHUM / CREATIVE & DIGITAL</p>
-          <h2 id="showcase-title">ไอเดียของคุณ <span>เราพร้อมทำให้เป็นจริง</span></h2>
-          <p className="section-sub">เว็บไซต์ ดีไซน์ และการตลาดที่ช่วยให้ธุรกิจของคุณก้าวต่อไป</p>
+          <h2 id="showcase-title"><T>ไอเดียของคุณ</T><span><T>เราพร้อมทำให้เป็นจริง</T></span></h2>
+          <p className="section-sub"><T>เว็บไซต์ ดีไซน์ และการตลาดที่ช่วยให้ธุรกิจของคุณก้าวต่อไป</T></p>
         </div>
-        <SqueezeCarousel slides={slides} label="บริการของ Promptthum" height="clamp(100px, 24cqi, 300px)" gap="clamp(6px, 1.4cqi, 16px)" slatWidth={4} slatGap={4} radius={12} duration={700} accent="var(--brand-blue)" accentForeground="#fff" />
+        <SqueezeCarousel slides={translatedSlides} label={t('บริการของ Promptthum')} height="clamp(100px, 24cqi, 300px)" gap="clamp(6px, 1.4cqi, 16px)" slatWidth={4} slatGap={4} radius={12} duration={700} accent="var(--brand-blue)" accentForeground="#fff" />
       </div>
     </section>
   )

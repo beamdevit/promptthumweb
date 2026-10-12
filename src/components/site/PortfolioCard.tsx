@@ -1,3 +1,4 @@
+import { T } from '@/components/site/SiteLanguage'
 import type { Portfolio } from '@/payload-types'
 import { categoryLabel, coverOf } from '@/lib/portfolio'
 
@@ -13,7 +14,7 @@ export function PortfolioCard({ item }: { item: Portfolio }) {
         ) : (
           <span className="work-thumb-fallback">{item.title}</span>
         )}
-        <span className="work-cat">{categoryLabel(item.category)}</span>
+        <span className="work-cat"><T>{categoryLabel(item.category)}</T></span>
       </div>
       <div className="work-body">
         <h3>{item.title}</h3>

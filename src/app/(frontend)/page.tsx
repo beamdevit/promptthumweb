@@ -1,3 +1,4 @@
+import { T } from '@/components/site/SiteLanguage'
 import { ArticleCard } from '@/components/site/ArticleCard'
 import { getArticles } from '@/lib/articles'
 import { getSiteContact } from '@/lib/site-contact'
@@ -24,6 +25,14 @@ const companyHistory = [
 
 
 
+const companyHistoryEn = [
+  "Promptthum was founded by a team who wanted to use their experience in graphic design and digital marketing to help businesses build a strong identity and connect with their customers, especially small businesses and new entrepreneurs.",
+  "We began with graphic design and expanded into advertising, branding, websites, content and digital marketing, bringing complete marketing support together under one team.",
+  "Working with many different businesses has helped us understand their individual needs. We use that experience to develop a flexible, detail-focused process built around each client’s goals.",
+  "Today, we continue to develop our design and digital marketing services, combining creativity, technology and business understanding to create work that looks good, works in practice and supports business growth.",
+  "We believe good design should be accessible to every business, helping brands build trust, express their identity and grow."
+]
+
 export default async function HomePage() {
   const [featuredWork, video, articles, contact] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact()])
 
@@ -35,14 +44,10 @@ export default async function HomePage() {
         <section className="hero">
           <div className="wrap hero-inner">
             <div className="hero-copy">
-              <h1>อย่าให้ไอเดียของคุณอยู่แค่ในความคิด</h1>
-              <p className="lede">
-                Promptthum ที่นี่เรารับทำเว็บไซต์ที่มีคุณภาพ รองรับ SEO และทุกอุปกรณ์ รวมถึงให้คำปรึกษา
-                ออกแบบ UX/UI ปรับแต่ง จนถึงช่วยทำการตลาด กราฟิกดีไซน์ สื่อโซเชียลมีเดียและสื่อสิ่งพิมพ์
-                เรียกได้ว่าครบจบในที่เดียว ราคาสบายกระเป๋า ด้วยทีมงานมืออาชีพ
-              </p>
+              <h1><T>อย่าให้ไอเดียของคุณอยู่แค่ในความคิด</T></h1>
+              <p className="lede"><T>Promptthum ที่นี่เรารับทำเว็บไซต์ที่มีคุณภาพ รองรับ SEO และทุกอุปกรณ์ รวมถึงให้คำปรึกษา ออกแบบ UX/UI ปรับแต่ง จนถึงช่วยทำการตลาด กราฟิกดีไซน์ สื่อโซเชียลมีเดียและสื่อสิ่งพิมพ์ เรียกได้ว่าครบจบในที่เดียว ราคาสบายกระเป๋า ด้วยทีมงานมืออาชีพ</T></p>
               <div className="hero-cta">
-                <a className="btn btn-outline" href="#contact">คุยกับทีม</a>
+                <a className="btn btn-outline" href="#contact"><T>คุยกับทีม</T></a>
               </div>
             </div>
             <SiteShowreel {...video} />
@@ -62,9 +67,9 @@ export default async function HomePage() {
               </div>
               <div className="about-body">
                 <span className="about-eyebrow">ABOUT US</span>
-                <h2>ประวัติบริษัท</h2>
+                <h2><T>ประวัติบริษัท</T></h2>
                 {companyHistory.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+                  <p key={index}><T en={companyHistoryEn[index]}>{paragraph}</T></p>
                 ))}
               </div>
             </div>
@@ -75,8 +80,8 @@ export default async function HomePage() {
           <section className="portfolio" id="portfolio">
             <div className="wrap">
               <div className="section-head">
-                <h2>ผลงานที่เลือกมาแล้ว</h2>
-                <a className="see-all" href="/portfolio">ดูทั้งหมด →</a>
+                <h2><T>ผลงานที่เลือกมาแล้ว</T></h2>
+                <a className="see-all" href="/portfolio"><T>ดูทั้งหมด →</T></a>
               </div>
               <div className="work-grid">
                 {featuredWork.map((item) => (
@@ -91,12 +96,12 @@ export default async function HomePage() {
           <div className="wrap">
             <div className="section-head">
               <div>
-                <h2>บทความ</h2>
-                <p className="section-sub">อัปเดตความรู้ด้านการตลาดออนไลน์และงานออกแบบเว็บไซต์</p>
+                <h2><T>บทความ</T></h2>
+                <p className="section-sub"><T>อัปเดตความรู้ด้านการตลาดออนไลน์และงานออกแบบเว็บไซต์</T></p>
               </div>
-              <a className="see-all" href="/articles">ดูทั้งหมด →</a>
+              <a className="see-all" href="/articles"><T>ดูทั้งหมด →</T></a>
             </div>
-            {articles.docs.length === 0 && <p className="articles-empty">เตรียมพบกับบทความและไอเดียใหม่ ๆ จาก Promptthum</p>}
+            {articles.docs.length === 0 && <p className="articles-empty"><T>เตรียมพบกับบทความและไอเดียใหม่ ๆ จาก Promptthum</T></p>}
             <div className="articles-grid">
               {articles.docs.map(article => <ArticleCard key={article.id} article={article} />)}
             </div>
@@ -106,23 +111,21 @@ export default async function HomePage() {
         <section className="contact" id="contact">
           <div className="wrap contact-inner">
             <div className="contact-form-col">
-              <h2>ปรึกษาฟรี ไม่มีค่าใช้จ่าย</h2>
-              <p className="section-sub">
-                บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.
-              </p>
+              <h2><T>ปรึกษาฟรี ไม่มีค่าใช้จ่าย</T></h2>
+              <p className="section-sub"><T>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ ทีมงานติดต่อกลับภายใน 24 ชม.</T></p>
               <ContactForm />
             </div>
 
             <aside className="contact-side">
-              <h3>ติดต่อเรา</h3>
+              <h3><T>ติดต่อเรา</T></h3>
               <div className="cta-band">
-                {contact.lineUrl && <a className="btn btn-ink btn-sm" href={contact.lineUrl} target="_blank" rel="noopener noreferrer">แอด LINE</a>}
-                <a className="btn btn-outline btn-sm" href="tel:+66000000000">โทรเลย</a>
+                {contact.lineUrl && <a className="btn btn-ink btn-sm" href={contact.lineUrl} target="_blank" rel="noopener noreferrer"><T>แอด LINE</T></a>}
+                <a className="btn btn-outline btn-sm" href="tel:+66000000000"><T>โทรเลย</T></a>
               </div>
               <p className="contact-channels">LINE OA / Facebook / IG / TikTok</p>
               {contact.qr?.url && <figure className="contact-line-qr">
                 <img src={contact.qr.url} alt={contact.qr.alt || 'QR Code เพิ่มเพื่อน LINE ของ Promptthum'} loading="lazy" />
-                <figcaption>สแกนเพื่อเพิ่มเพื่อนบน LINE</figcaption>
+                <figcaption><T>สแกนเพื่อเพิ่มเพื่อนบน LINE</T></figcaption>
               </figure>}
             </aside>
           </div>

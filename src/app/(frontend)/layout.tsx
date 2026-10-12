@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import { cookies } from 'next/headers'
+import { SiteLanguage } from '@/components/site/SiteLanguage'
 
 import './carousel-theme.css'
 import './styles.css'
@@ -10,9 +12,10 @@ export const metadata: Metadata = {
     'Promptthum ที่นี่เรารับทำเว็บไซต์ที่มีคุณภาพ รองรับ SEO และทุกอุปกรณ์ รวมถึงให้คำปรึกษา ออกแบบ UX/UI ปรับแต่ง จนถึงช่วยทำการตลาด กราฟิกดีไซน์ สื่อโซเชียลมีเดียและสื่อสิ่งพิมพ์ เรียกได้ว่าครบจบในที่เดียว ราคาสบายกระเป๋า ด้วยทีมงานมืออาชีพ',
 }
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const locale = (await cookies()).get('site-language')?.value === 'en' ? 'en' : 'th'
   return (
-    <html lang="th">
+    <html lang={locale}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -21,7 +24,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body><SiteLanguage initialLocale={locale}>{children}</SiteLanguage></body>
     </html>
   )
 }

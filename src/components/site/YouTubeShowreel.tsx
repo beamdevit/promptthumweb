@@ -1,5 +1,7 @@
 'use client'
 
+import { T } from '@/components/site/SiteLanguage'
+
 import { useEffect, useRef, useState } from 'react'
 import { GlassPlayButton, PremiumVideoShell } from './PremiumVideo'
 
@@ -52,6 +54,6 @@ export function YouTubeShowreel({ videoId }: { videoId: string }) {
   return <PremiumVideoShell scale={1}>
     <div ref={mount} className="showreel-youtube-viewport" />
     <GlassPlayButton playing={playing} label="PLAY SHOWREEL" disabled={!ready || error} onToggle={() => playing ? player.current?.pauseVideo() : player.current?.playVideo()} />
-    {error && <div className="premium-video-message" role="status">ไม่สามารถเล่นวิดีโอได้ <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline' }}>เปิดใน YouTube</a></div>}
+    {error && <div className="premium-video-message" role="status"><T>ไม่สามารถเล่นวิดีโอได้</T><a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline' }}><T>เปิดใน YouTube</T></a></div>}
   </PremiumVideoShell>
 }

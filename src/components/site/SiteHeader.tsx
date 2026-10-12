@@ -1,8 +1,14 @@
 'use client'
 
+import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
+import { usePathname } from 'next/navigation'
+
+
 import { useEffect, useState } from 'react'
 
 export function SiteHeader() {
+  const { locale, setLocale, t } = useSiteLanguage()
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -21,24 +27,28 @@ export function SiteHeader() {
           <img src="/assets/logo.png" alt="Promptthum" />
         </a>
 
-        <nav className={`main-nav${menuOpen ? ' is-open' : ''}`} id="main-nav">
+        <nav className={`main-nav${menuOpen ? ' is-open' : ''}`} id="main-nav" aria-label={t('เมนูหลัก')}>
           <ul>
+            <li><a className="nav-link" href="/" aria-current={pathname === '/' ? 'page' : undefined} onClick={() => setMenuOpen(false)}><T>หน้าแรก</T></a></li>
             <li>
-              <a className="nav-link" href="/portfolio">ผลงาน</a>
+              <a className="nav-link" href="/portfolio" aria-current={pathname.startsWith('/portfolio') ? 'page' : undefined} onClick={() => setMenuOpen(false)}><T>ผลงาน</T></a>
             </li>
             <li>
-              <a className="nav-link" href="/articles">บทความ</a>
+              <a className="nav-link" href="/articles" aria-current={pathname.startsWith('/articles') ? 'page' : undefined} onClick={() => setMenuOpen(false)}><T>บทความ</T></a>
             </li>
           </ul>
         </nav>
 
         <div className="header-actions">
-          <span className="lang-badge" aria-label="ภาษาไทย">TH</span>
-          <a className="btn btn-outline btn-sm" href="/#contact">ปรึกษาฟรี</a>
-          <a className="btn btn-ink btn-sm" href="/#contact">ขอใบเสนอราคา</a>
+          <button type="button" className="lang-badge" aria-label={locale === 'th' ? 'Switch to English' : 'เปลี่ยนเป็นภาษาไทย'} onClick={() => setLocale(locale === 'th' ? 'en' : 'th')}>
+            <span lang="en" className={locale === 'th' ? 'is-selected' : undefined}>TH</span><span aria-hidden="true"> / </span><span lang="en" className={locale === 'en' ? 'is-selected' : undefined}>EN</span>
+            <span className="sr-only">{locale === 'th' ? ' — ภาษาปัจจุบัน: ไทย' : ' — Current language: English'}</span>
+          </button>
+          <a className="btn btn-outline btn-sm" href="/#contact"><T>ปรึกษาฟรี</T></a>
+          <a className="btn btn-ink btn-sm" href="/#contact"><T>ขอใบเสนอราคา</T></a>
           <button
             className="menu-toggle"
-            aria-label="เปิดเมนู"
+            aria-label={t(menuOpen ? 'ปิดเมนู' : 'เปิดเมนู')}
             aria-expanded={menuOpen}
             aria-controls="main-nav"
             onClick={() => setMenuOpen((open) => !open)}

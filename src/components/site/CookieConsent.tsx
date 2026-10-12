@@ -1,10 +1,14 @@
 'use client'
 
+import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
+
+
 import { useEffect, useState } from 'react'
 
 const STORAGE_KEY = 'promptthum:cookie-consent'
 
 export function CookieConsent() {
+  const { t } = useSiteLanguage()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -27,12 +31,9 @@ export function CookieConsent() {
   if (!visible) return null
 
   return (
-    <div className="cookie-consent" role="dialog" aria-live="polite" aria-label="การเก็บคุกกี้">
-      <h2>เว็บไซต์ของเรามีการเก็บ cookies</h2>
-      <p>
-        เราใช้คุกกี้เพื่อเพิ่มประสิทธิภาพ และประสบการณ์ที่ดีในการใช้งานเว็บไซต์ กด &ldquo;ACCEPT&rdquo;
-        เพื่อยอมรับข้อตกลงในการเก็บข้อมูล
-      </p>
+    <div className="cookie-consent" role="dialog" aria-live="polite" aria-label={t('การเก็บคุกกี้')}>
+      <h2><T>เว็บไซต์ของเรามีการเก็บ cookies</T></h2>
+      <p><T>เราใช้คุกกี้เพื่อเพิ่มประสิทธิภาพ และประสบการณ์ที่ดีในการใช้งานเว็บไซต์ กด “ACCEPT” เพื่อยอมรับข้อตกลงในการเก็บข้อมูล</T></p>
       <div className="cookie-consent-actions">
         <button type="button" className="cookie-btn cookie-btn--ghost" onClick={() => decide('rejected')}>
           Reject All

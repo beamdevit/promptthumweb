@@ -1,3 +1,4 @@
+import { T } from '@/components/site/SiteLanguage'
 import type { Metadata } from 'next'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { notFound } from 'next/navigation'
@@ -43,26 +44,26 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <main>
         <section className="page-hero">
           <div className="wrap">
-            <a className="work-back" href="/portfolio">← กลับไปหน้าผลงาน</a>
-            <span className="page-hero-eyebrow">{categoryLabel(item.category)}</span>
+            <a className="work-back" href="/portfolio"><T>← กลับไปหน้าผลงาน</T></a>
+            <span className="page-hero-eyebrow"><T>{categoryLabel(item.category)}</T></span>
             <h1>{item.title}</h1>
             {item.summary && <p>{item.summary}</p>}
             <dl className="work-facts">
               {item.client && (
                 <div>
-                  <dt>ลูกค้า</dt>
+                  <dt><T>ลูกค้า</T></dt>
                   <dd>{item.client}</dd>
                 </div>
               )}
               {item.year && (
                 <div>
-                  <dt>ปี</dt>
+                  <dt><T>ปี</T></dt>
                   <dd>{item.year}</dd>
                 </div>
               )}
               <div>
-                <dt>ประเภทงาน</dt>
-                <dd>{categoryLabel(item.category)}</dd>
+                <dt><T>ประเภทงาน</T></dt>
+                <dd><T>{categoryLabel(item.category)}</T></dd>
               </div>
             </dl>
           </div>
@@ -108,11 +109,11 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
         <section className="work-cta">
           <div className="wrap">
-            <h2>อยากได้งานแบบนี้ไหม?</h2>
-            <p>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ</p>
+            <h2><T>อยากได้งานแบบนี้ไหม?</T></h2>
+            <p><T>บอกความต้องการและเป้าหมาย เพื่อให้เราช่วยวางแนวทางที่เหมาะกับธุรกิจ</T></p>
             <div className="work-cta-actions">
-              <a className="btn btn-cta" href="/#contact">คุยกับทีม</a>
-              <a className="btn btn-outline" href="/portfolio">ดูผลงานอื่น</a>
+              <a className="btn btn-cta" href="/#contact"><T>คุยกับทีม</T></a>
+              <a className="btn btn-outline" href="/portfolio"><T>ดูผลงานอื่น</T></a>
             </div>
           </div>
         </section>
