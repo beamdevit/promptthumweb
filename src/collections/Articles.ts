@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -34,7 +35,14 @@ export const Articles: CollectionConfig = {
     { name: 'cover', type: 'upload', relationTo: 'media', label: 'ภาพปก', filterOptions: { mimeType: { contains: 'image/' } } },
     { name: 'category', type: 'text', label: 'หมวดหมู่', defaultValue: 'บทความ', admin: { position: 'sidebar' } },
     { name: 'publishedAt', type: 'date', label: 'วันที่เผยแพร่', admin: { position: 'sidebar', description: 'ระบบใส่วันที่ให้เมื่อเผยแพร่ครั้งแรก ช่องนี้เป็นวันที่แสดง ไม่ใช่การตั้งเวลาเผยแพร่' } },
-    { name: 'content', type: 'richText', required: true, label: 'เนื้อหาบทความ' },
+    {
+      name: 'content', type: 'richText', required: true, label: 'เนื้อหาบทความ',
+      admin: { className: 'pt-article-editor' },
+      editor: lexicalEditor({
+        admin: { hideGutter: true, hideAddBlockButton: true, hideDraggableBlockElement: true, placeholder: 'เขียนเนื้อหาบทความ...' },
+        features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+      }),
+    },
     { name: 'tags', type: 'array', label: 'แท็ก', fields: [{ name: 'tag', type: 'text', required: true, label: 'ชื่อแท็ก' }] },
   ],
 }

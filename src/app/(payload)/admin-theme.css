@@ -66,3 +66,13 @@ body{background:var(--theme-bg)}
 .pt-nav-home:hover,.pt-nav-home--active{background:#edf5ff;color:var(--pt-secondary)}
 @media(max-width:1100px){.pt-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-dashboard-grid{grid-template-columns:1fr}.pt-side-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.pt-dashboard{padding:16px 16px 36px}.pt-dashboard-heading{align-items:flex-start;flex-direction:column;gap:16px}.pt-metrics{gap:10px}.pt-card{padding:18px}.pt-metric>strong{font-size:26px}.pt-side-cards{grid-template-columns:1fr}.pt-activity-list time{font-size:10px}.pt-card-heading{gap:8px}}
+
+/* Article composer: a persistent toolbar and a clearly defined writing area. */
+.pt-article-editor .rich-text-lexical__wrap{border:1px solid #dce1e8;border-radius:10px;background:#fff;overflow:visible}
+.pt-article-editor .fixed-toolbar{position:relative;top:auto;z-index:2;display:flex;flex-wrap:wrap;gap:4px;padding:8px 10px;background:#f1f2f4;border:0;border-bottom:1px solid #dce1e8;border-radius:10px 10px 0 0;box-shadow:none}
+.pt-article-editor .fixed-toolbar__group{flex-shrink:0}
+.pt-article-editor .ContentEditable__root{min-height:300px;padding:18px 20px;font-size:16px;line-height:1.8;outline:none}
+.pt-article-editor .rich-text-lexical__wrap:focus-within{border-color:#016ac6;box-shadow:0 0 0 2px rgba(1,106,198,.1)}
+.pt-article-editor .fixed-toolbar button{border-radius:5px}
+.pt-article-editor .fixed-toolbar button:hover{background:#e2ebf5}
+@media(max-width:600px){.pt-article-editor .ContentEditable__root{min-height:260px;padding:14px}.pt-article-editor .fixed-toolbar{padding:6px;gap:2px}}
