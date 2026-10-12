@@ -41,7 +41,7 @@ export function SiteHeader() {
 
         <div className="header-actions">
           <button type="button" className="lang-badge" aria-label={locale === 'th' ? 'Switch to English' : 'เปลี่ยนเป็นภาษาไทย'} onClick={() => setLocale(locale === 'th' ? 'en' : 'th')}>
-            <span lang="en" className={locale === 'th' ? 'is-selected' : undefined}>TH</span><span aria-hidden="true"> / </span><span lang="en" className={locale === 'en' ? 'is-selected' : undefined}>EN</span>
+            <span lang="en">{locale === 'th' ? 'TH' : 'EN'}</span>
             <span className="sr-only">{locale === 'th' ? ' — ภาษาปัจจุบัน: ไทย' : ' — Current language: English'}</span>
           </button>
           <a className="btn btn-outline btn-sm" href="/#contact"><T>ปรึกษาฟรี</T></a>

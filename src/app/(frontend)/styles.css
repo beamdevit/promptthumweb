@@ -111,7 +111,7 @@ img{max-width:100%;display:block}
 
 .header-actions{display:flex;align-items:center;gap:10px}
 .lang-badge{
-  background:transparent;min-height:40px;min-width:64px;white-space:nowrap;
+  background:transparent;min-height:40px;min-width:40px;white-space:nowrap;
   font:600 11px ui-monospace,Menlo,monospace;color:rgba(255,255,255,.85);
   border:1.5px solid rgba(255,255,255,.35);border-radius:4px;padding:3px 6px;
 }
@@ -144,7 +144,6 @@ img{max-width:100%;display:block}
   width:100%;max-width:900px;border-radius:16px;overflow:hidden;
   background:var(--white);box-shadow:0 30px 60px rgba(9,30,64,.35);
 }
-.lang-badge .is-selected{color:#fff;text-decoration:underline;text-underline-offset:4px}
 .lang-badge:hover{background:rgba(255,255,255,.12)}
 .lang-badge:focus-visible,.nav-link:focus-visible{outline:2px solid #fff;outline-offset:4px}
 .nav-link[aria-current="page"]{color:#fff;font-weight:600}
