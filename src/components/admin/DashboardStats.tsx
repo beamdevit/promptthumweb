@@ -1,6 +1,7 @@
 import type { AdminViewServerProps } from 'payload'
 import { redirect } from 'next/navigation'
 import { DashboardOverview } from './DashboardOverview'
+import { VisitorDashboard } from './VisitorDashboard'
 
 export async function DashboardStats({ initPageResult }: AdminViewServerProps) {
   const req = initPageResult.req
@@ -61,6 +62,7 @@ export async function DashboardStats({ initPageResult }: AdminViewServerProps) {
     ])
     return (
       <DashboardOverview
+        analytics={<VisitorDashboard req={req} />}
         data={{
           leads: leads.totalDocs,
           newLeads: newLeads.totalDocs,

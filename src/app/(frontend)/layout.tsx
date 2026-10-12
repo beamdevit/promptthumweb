@@ -4,6 +4,8 @@ import { cookies } from 'next/headers'
 import { SiteLanguage } from '@/components/site/SiteLanguage'
 import { SiteBranding } from '@/components/site/SiteLogo'
 import { getSiteBranding } from '@/lib/site-branding'
+import { VisitorTracker } from '@/components/site/VisitorTracker'
+import { CookieConsent } from '@/components/site/CookieConsent'
 
 import './carousel-theme.css'
 import './styles.css'
@@ -29,7 +31,11 @@ export default async function FrontendLayout({ children }: { children: React.Rea
       </head>
       <body>
         <SiteBranding logo={logo}>
-          <SiteLanguage initialLocale={locale}>{children}</SiteLanguage>
+          <SiteLanguage initialLocale={locale}>
+            <VisitorTracker />
+            {children}
+            <CookieConsent />
+          </SiteLanguage>
         </SiteBranding>
       </body>
     </html>

@@ -7,13 +7,8 @@ export function AdminBrand() {
   return (
     <div className="pt-nav-brand">
       <a className="pt-brand" href="/admin">
-        <span className="pt-brand-mark" aria-hidden="true">
-          P
-        </span>
-        <span>
-          <strong>Promptthum</strong>
-          <small>จัดการเว็บไซต์</small>
-        </span>
+        <img className="pt-nav-logo" src="/assets/admin-logo.png" alt="Promptthum" width="1040" height="495" />
+        <small>จัดการเว็บไซต์</small>
       </a>
       <a
         className={

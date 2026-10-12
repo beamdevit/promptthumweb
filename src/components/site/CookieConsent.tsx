@@ -1,11 +1,12 @@
 'use client'
 
 import { T, useSiteLanguage } from '@/components/site/SiteLanguage'
+import { ANALYTICS_CONSENT_EVENT, ANALYTICS_CONSENT_KEY } from '@/lib/visitor-analytics'
 
 
 import { useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'promptthum:cookie-consent'
+const STORAGE_KEY = ANALYTICS_CONSENT_KEY
 
 export function CookieConsent() {
   const { t } = useSiteLanguage()
@@ -22,6 +23,7 @@ export function CookieConsent() {
   const decide = (choice: 'accepted' | 'rejected') => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ choice, at: new Date().toISOString() }))
+      window.dispatchEvent(new Event(ANALYTICS_CONSENT_EVENT))
     } catch {
       // Ignore — the banner still closes for this visit.
     }

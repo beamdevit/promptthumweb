@@ -1,4 +1,5 @@
 import type { Lead } from '@/payload-types'
+import type { ReactNode } from 'react'
 
 export type DashboardData = {
   leads: number
@@ -79,7 +80,7 @@ const statusLabels: Record<string, string> = {
 }
 const number = (value: number) => value.toLocaleString('th-TH')
 
-export function DashboardOverview({ data }: { data: DashboardData }) {
+export function DashboardOverview({ data, analytics }: { data: DashboardData; analytics?: ReactNode }) {
   const metrics = [
     {
       title: 'บทความเผยแพร่',
@@ -123,6 +124,7 @@ export function DashboardOverview({ data }: { data: DashboardData }) {
           เปิดเว็บไซต์ ↗
         </a>
       </header>
+      {analytics}
       <section className="pt-task-section" aria-labelledby="pt-tasks">
         <div className="pt-section-heading">
           <h2 id="pt-tasks">วันนี้ต้องการทำอะไร?</h2>

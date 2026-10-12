@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { CookieConsent } from '@/components/site/CookieConsent'
 import { WelcomeSplash } from '@/components/site/WelcomeSplash'
 import { getSiteVideo } from '@/lib/site-video'
 
@@ -18,7 +17,6 @@ export default async function WelcomePage() {
   return (
     <>
       <WelcomeSplash {...video} />
-      <CookieConsent />
     </>
   )
 }

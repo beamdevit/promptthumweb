@@ -72,6 +72,7 @@ export interface Config {
     portfolio: Portfolio;
     media: Media;
     users: User;
+    'site-visits': SiteVisit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'site-visits': SiteVisitsSelect<false> | SiteVisitsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -352,6 +354,20 @@ export interface Portfolio {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-visits".
+ */
+export interface SiteVisit {
+  id: number;
+  sessionHash: string;
+  visitorHash: string;
+  source: string;
+  device: 'mobile' | 'tablet' | 'desktop' | 'other';
+  landingPath: string;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -393,6 +409,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'site-visits';
+        value: number | SiteVisit;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -592,6 +612,19 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-visits_select".
+ */
+export interface SiteVisitsSelect<T extends boolean = true> {
+  sessionHash?: T;
+  visitorHash?: T;
+  source?: T;
+  device?: T;
+  landingPath?: T;
+  createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
