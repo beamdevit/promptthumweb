@@ -49,7 +49,31 @@ export const premiumVideoCSS = `
 @media(prefers-reduced-motion:reduce){.premium-video-surface,.premium-control,.premium-control-label{transition:none!important}}
 `
 
-export function PremiumVideoShell({ children, ...props }: PremiumVideoProps & { children: ReactNode }) {
+export function PremiumVideoShell({ children, soundMuted, onToggleSound, soundDisabled, ...props }: PremiumVideoProps & { children: ReactNode; soundMuted?: boolean; onToggleSound?: () => void; soundDisabled?: boolean }) {
+  const shell = useRef<HTMLDivElement>(null)
+  const [fullscreen, setFullscreen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  useEffect(() => {
+    const sync = () => setFullscreen(document.fullscreenElement === shell.current)
+    document.addEventListener('fullscreenchange', sync)
+    return () => document.removeEventListener('fullscreenchange', sync)
+  }, [])
+  useEffect(() => {
+    if (!expanded) return
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setExpanded(false) }
+    window.addEventListener('keydown', escape)
+    return () => { document.body.style.overflow = overflow; window.removeEventListener('keydown', escape) }
+  }, [expanded])
+  const toggleFullscreen = async () => {
+    if (expanded) { setExpanded(false); return }
+    if (document.fullscreenElement === shell.current) { await document.exitFullscreen().catch(() => {}); return }
+    try {
+      if (!shell.current?.requestFullscreen) { setExpanded(true); return }
+      await shell.current.requestFullscreen()
+    } catch { setExpanded(true) }
+  }
   const variables = {
     '--pv-radius': `${props.borderRadius ?? 30}px`, '--pv-scale': props.scale ?? .96,
     '--pv-button-size': `${props.buttonSize ?? 80}px`, '--pv-opacity': props.backgroundOpacity ?? .16,
@@ -60,7 +84,16 @@ export function PremiumVideoShell({ children, ...props }: PremiumVideoProps & { 
     width: props.containerWidth ?? '100%', height: props.containerHeight ?? '100%',
     perspective: `${props.perspective ?? 1200}px`, ...props.style,
   } as CSSProperties
-  return <div className="premium-video" style={variables}><style>{premiumVideoCSS}</style><div className="premium-video-surface">{children}</div></div>
+  return <div ref={shell} className={`premium-video${expanded ? ' is-expanded' : ''}`} style={variables}><style>{premiumVideoCSS}</style><div className="premium-video-surface">{children}
+    <div className="premium-video-tools">
+      {onToggleSound && <button type="button" disabled={soundDisabled} onClick={onToggleSound} aria-label={soundMuted ? 'Unmute video' : 'Mute video'} title={soundMuted ? 'เปิดเสียง / Unmute' : 'ปิดเสียง / Mute'}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z" />{soundMuted ? <path d="m16 9 5 6m0-6-5 6" /> : <><path d="M15 8a6 6 0 0 1 0 8" /><path d="M18 5a10 10 0 0 1 0 14" /></>}</svg>
+      </button>}
+      <button type="button" onClick={() => void toggleFullscreen()} aria-label={fullscreen || expanded ? 'Exit fullscreen' : 'Enter fullscreen'} title={fullscreen || expanded ? 'ออกจากเต็มหน้าจอ / Exit fullscreen' : 'เต็มหน้าจอ / Fullscreen'}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={fullscreen || expanded ? 'M9 3v6H3m12-6v6h6M9 21v-6H3m12 6v-6h6' : 'M9 3H3v6m12-6h6v6M3 15v6h6m6 0h6v-6'} /></svg>
+      </button>
+    </div>
+  </div></div>
 }
 
 export function GlassPlayButton({ playing, onToggle, label = 'PLAY', disabled = false, controls }: {
@@ -80,6 +113,7 @@ export function PremiumVideo(props: PremiumVideoProps) {
   const ref = useRef<HTMLVideoElement>(null)
   const id = useId()
   const [playing, setPlaying] = useState(false)
+  const [soundMuted, setSoundMuted] = useState(muted)
   const [error, setError] = useState('')
   useEffect(() => {
     const video = ref.current
@@ -87,6 +121,7 @@ export function PremiumVideo(props: PremiumVideoProps) {
     setError('')
     setPlaying(false)
     video.muted = muted
+    setSoundMuted(muted)
     if (autoplay && videoUrl) void video.play().catch(() => { /* A user gesture may be required. */ })
     else video.pause()
   }, [videoUrl, autoplay, muted])
@@ -96,10 +131,11 @@ export function PremiumVideo(props: PremiumVideoProps) {
     if (!video.paused) video.pause()
     else { setError(''); void video.play().catch(() => setError('Unable to play this video. Please check the video URL.')) }
   }
-  return <PremiumVideoShell {...props}>
+  return <PremiumVideoShell {...props} soundMuted={soundMuted} soundDisabled={!videoUrl || !!error} onToggleSound={() => { if (ref.current) { ref.current.muted = !ref.current.muted; setSoundMuted(ref.current.muted) } }}>
     <video ref={ref} id={id} src={videoUrl || undefined} poster={poster || undefined} autoPlay={autoplay} muted={muted}
       loop={loop} playsInline preload="auto" controls={false} style={{ objectFit: videoFit }}
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}
+      onVolumeChange={() => { if (ref.current) setSoundMuted(ref.current.muted) }}
       onError={() => { setPlaying(false); setError('Unable to load this video. Please check the video URL.') }} />
     <GlassPlayButton playing={playing} onToggle={toggle} label={showreelText} disabled={!videoUrl} controls={id}/>
     {error && <div className="premium-video-message" role="status">{error}</div>}

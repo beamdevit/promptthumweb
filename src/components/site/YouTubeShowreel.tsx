@@ -5,7 +5,7 @@ import { T } from '@/components/site/SiteLanguage'
 import { useEffect, useRef, useState } from 'react'
 import { GlassPlayButton, PremiumVideoShell } from './PremiumVideo'
 
-type Player = { playVideo(): void; pauseVideo(): void; mute(): void; destroy(): void }
+type Player = { playVideo(): void; pauseVideo(): void; mute(): void; unMute(): void; isMuted(): boolean; destroy(): void }
 type YouTubeAPI = { Player: new (element: HTMLElement, options: Record<string, unknown>) => Player }
 declare global { interface Window { YT?: YouTubeAPI; onYouTubeIframeAPIReady?: () => void } }
 let apiPromise: Promise<YouTubeAPI> | undefined
@@ -29,11 +29,12 @@ export function YouTubeShowreel({ videoId }: { videoId: string }) {
   const player = useRef<Player | null>(null)
   const [playing, setPlaying] = useState(false)
   const [ready, setReady] = useState(false)
+  const [muted, setMuted] = useState(true)
   const [error, setError] = useState(false)
   useEffect(() => {
     let disposed = false
     const readyTimeout = window.setTimeout(() => { if (!disposed) setError(true) }, 20000)
-    setReady(false); setPlaying(false); setError(false)
+    setReady(false); setPlaying(false); setError(false); setMuted(true)
     void loadYouTube().then(YT => {
       if (disposed || !mount.current) return
       const host = document.createElement('div')
@@ -51,7 +52,11 @@ export function YouTubeShowreel({ videoId }: { videoId: string }) {
     }).catch(() => { if (!disposed) setError(true) })
     return () => { disposed = true; clearTimeout(readyTimeout); player.current?.destroy(); player.current = null }
   }, [videoId])
-  return <PremiumVideoShell scale={1}>
+  return <PremiumVideoShell scale={1} soundMuted={muted} soundDisabled={!ready || error} onToggleSound={() => {
+    if (!player.current || !ready) return
+    if (muted) player.current.unMute(); else player.current.mute()
+    setMuted(!muted)
+  }}>
     <div ref={mount} className="showreel-youtube-viewport" />
     <GlassPlayButton playing={playing} label="PLAY SHOWREEL" disabled={!ready || error} onToggle={() => playing ? player.current?.pauseVideo() : player.current?.playVideo()} />
     {error && <div className="premium-video-message" role="status"><T>ไม่สามารถเล่นวิดีโอได้</T><a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline' }}><T>เปิดใน YouTube</T></a></div>}
