@@ -2,11 +2,12 @@ import type { GlobalConfig } from 'payload'
 import { DEFAULT_YOUTUBE_URL, youtubeId } from '../lib/youtube'
 export const SiteVideo: GlobalConfig = {
   slug: 'site-video', label: 'วิดีโอเว็บไซต์',
+  admin: { group: 'จัดการเนื้อหา', description: 'เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome ได้ที่นี่ วางลิงก์ใหม่แล้วกด Save เพื่อใช้กับทั้งสองหน้า หากต้องการใช้ YouTube ให้เว้นช่องไฟล์ MP4 / WebM ว่าง' },
   access: { read: () => true, update: ({ req }) => Boolean(req.user) },
   fields: [{
     name: 'youtubeUrl', type: 'text', required: true,
     label: 'ลิงก์วิดีโอ YouTube', defaultValue: DEFAULT_YOUTUBE_URL,
-    admin: { description: 'ใช้ร่วมกันในหน้า Welcome และหน้าแรก รองรับ YouTube, Shorts และ youtu.be บันทึกแล้วรีเฟรชหน้าเว็บไซต์เพื่อดูผล' },
+    admin: { description: 'รองรับ youtube.com/watch, YouTube Shorts และ youtu.be วางลิงก์แล้วกด Save จากนั้นรีเฟรชหน้าเว็บไซต์เพื่อดูผล' },
     validate: (value: unknown) => typeof value === 'string' && youtubeId(value) ? true : 'กรุณาใส่ลิงก์วิดีโอ YouTube ที่ถูกต้อง',
   }, {
     name: 'videoUrl', type: 'text', label: 'ไฟล์วิดีโอ HTML5 (MP4 / WebM)',
