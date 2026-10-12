@@ -3,10 +3,11 @@ import type { Portfolio } from '@/payload-types'
 import { categoryLabel, coverOf } from '@/lib/portfolio'
 
 export function PortfolioCard({ item }: { item: Portfolio }) {
+  if (!item.slug) return null
   const cover = coverOf(item)
 
   return (
-    <a className="work-card" href={`/portfolio/${item.slug}`}>
+    <a className="work-card" href={`/portfolio/${encodeURIComponent(item.slug)}`}>
       <div className="work-thumb">
         {cover?.url ? (
           /* eslint-disable-next-line @next/next/no-img-element */

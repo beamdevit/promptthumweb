@@ -130,6 +130,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * เปิดข้อความเพื่อดูรายละเอียด มอบหมายผู้รับผิดชอบ และเปลี่ยนสถานะเมื่อติดต่อกลับแล้ว
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "leads".
  */
@@ -194,16 +196,13 @@ export interface Article {
   id: number;
   title: string;
   /**
-   * เว้นว่างเพื่อสร้างจากชื่อเรื่องอัตโนมัติ ควรคงชื่อ URL หลังเผยแพร่
+   * ข้อความสั้นใต้ชื่อบทความบนหน้าเว็บไซต์ ไม่เกิน 300 ตัวอักษร
    */
-  slug: string;
   summary?: string | null;
-  cover?: (number | null) | Media;
-  category?: string | null;
   /**
-   * ระบบใส่วันที่ให้เมื่อเผยแพร่ครั้งแรก ช่องนี้เป็นวันที่แสดง ไม่ใช่การตั้งเวลาเผยแพร่
+   * เลือกภาพเดิมจากคลังสื่อ หรืออัปโหลดภาพใหม่
    */
-  publishedAt?: string | null;
+  cover?: (number | null) | Media;
   content: {
     root: {
       type: string;
@@ -225,16 +224,30 @@ export interface Article {
         id?: string | null;
       }[]
     | null;
+  /**
+   * เว้นว่างเพื่อสร้างจากชื่อเรื่องอัตโนมัติ ควรคงชื่อ URL หลังเผยแพร่
+   */
+  slug?: string | null;
+  category?: string | null;
+  /**
+   * ระบบใส่วันที่ให้เมื่อเผยแพร่ครั้งแรก ช่องนี้เป็นวันที่แสดง ไม่ใช่การตั้งเวลาเผยแพร่
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * อัปโหลดรูปหรือวิดีโอ แล้วนำไปเลือกใช้ในบทความ ผลงาน หรือ QR ติดต่อเรา
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
+  /**
+   * ใช้ค้นหาในคลังสื่อ และอธิบายภาพให้ผู้ใช้โปรแกรมอ่านหน้าจอ เช่น “QR เพิ่มเพื่อน LINE Promptthum”
+   */
   alt: string;
   caption?: string | null;
   updatedAt: string;
@@ -276,22 +289,14 @@ export interface Media {
   };
 }
 /**
+ * เพิ่มชื่อ รายละเอียด และภาพปก เปิด “เผยแพร่” เพื่อแสดงบนเว็บไซต์ และเลือก “แสดงบนหน้าแรก” สำหรับผลงานเด่น
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "portfolio".
  */
 export interface Portfolio {
   id: number;
   title: string;
-  /**
-   * เว้นว่างไว้ได้ ระบบจะสร้างจากชื่อผลงานให้อัตโนมัติ
-   */
-  slug?: string | null;
-  published?: boolean | null;
-  featured?: boolean | null;
-  /**
-   * เลขน้อยขึ้นก่อน
-   */
-  order?: number | null;
   category: 'website' | 'graphic' | 'branding' | 'ads' | 'video' | 'packaging';
   client?: string | null;
   year?: string | null;
@@ -299,13 +304,6 @@ export interface Portfolio {
    * แสดงบนการ์ดผลงานและใช้เป็น meta description
    */
   summary?: string | null;
-  cover?: (number | null) | Media;
-  gallery?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
   description?: {
     root: {
       type: string;
@@ -327,6 +325,26 @@ export interface Portfolio {
         id?: string | null;
       }[]
     | null;
+  cover?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * เว้นว่างไว้ได้ ระบบจะสร้างจากชื่อผลงานให้อัตโนมัติ
+   */
+  slug?: string | null;
+  /**
+   * เปิดเพื่อแสดงต่อผู้ชมเว็บไซต์ ปิดเพื่อเก็บไว้ในหลังบ้าน
+   */
+  published?: boolean | null;
+  featured?: boolean | null;
+  /**
+   * เลขน้อยขึ้นก่อน
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -449,11 +467,8 @@ export interface LeadsSelect<T extends boolean = true> {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   summary?: T;
   cover?: T;
-  category?: T;
-  publishedAt?: T;
   content?: T;
   tags?:
     | T
@@ -461,6 +476,9 @@ export interface ArticlesSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  slug?: T;
+  category?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -471,21 +489,10 @@ export interface ArticlesSelect<T extends boolean = true> {
  */
 export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  published?: T;
-  featured?: T;
-  order?: T;
   category?: T;
   client?: T;
   year?: T;
   summary?: T;
-  cover?: T;
-  gallery?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
   description?: T;
   tags?:
     | T
@@ -493,6 +500,17 @@ export interface PortfolioSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  cover?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  slug?: T;
+  published?: T;
+  featured?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -614,7 +632,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome ได้ที่นี่ วางลิงก์ใหม่แล้วกด Save เพื่อใช้กับทั้งสองหน้า หากต้องการใช้ YouTube ให้เว้นช่องไฟล์ MP4 / WebM ว่าง
+ * เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome วางลิงก์แล้วกดบันทึก หากใส่ไฟล์ MP4 / WebM ระบบจะใช้ไฟล์นั้นแทน YouTube
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-video".
@@ -622,19 +640,22 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface SiteVideo {
   id: number;
   /**
-   * รองรับ youtube.com/watch, YouTube Shorts และ youtu.be วางลิงก์แล้วกด Save จากนั้นรีเฟรชหน้าเว็บไซต์เพื่อดูผล
+   * รองรับ YouTube, Shorts และ youtu.be หากใช้ไฟล์วิดีโอด้านล่าง สามารถเว้นช่องนี้ว่างได้
    */
-  youtubeUrl: string;
+  youtubeUrl?: string | null;
   /**
    * ใส่ URL ไฟล์วิดีโอโดยตรงเพื่อใช้ตัวเล่น HTML5 ถ้าเว้นว่างจะใช้ YouTube ด้านบน
    */
   videoUrl?: string | null;
+  /**
+   * ภาพที่แสดงระหว่างโหลดไฟล์วิดีโอ ใส่ลิงก์รูปภาพ HTTPS หรือเว้นว่างได้
+   */
   posterUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
- * ตั้งค่าปุ่มแอด LINE และภาพ QR ในส่วนติดต่อเราของหน้าแรก แล้วกด Save เพื่อแสดงบนเว็บไซต์
+ * ตั้งค่าปุ่มแอด LINE และภาพ QR ในส่วนติดต่อเราของหน้าแรก แล้วกดบันทึกเพื่อแสดงบนเว็บไซต์
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-contact".

@@ -3,6 +3,7 @@ import type { Article } from '@/payload-types'
 import { articleCover } from '@/lib/articles'
 
 export function ArticleCard({ article }: { article: Article }) {
+  if (!article.slug) return null
   const cover = articleCover(article)
   const date = article.publishedAt || article.createdAt
   return <a className="article-card" href={`/articles/${encodeURIComponent(article.slug)}`}>

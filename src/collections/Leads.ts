@@ -4,7 +4,9 @@ export const Leads: CollectionConfig = {
   slug: 'leads',
   labels: { singular: 'ข้อความติดต่อ', plural: 'ข้อความติดต่อ' },
   admin: {
-    group: 'Lead Management',
+    group: 'ลูกค้าและการติดต่อ',
+    description:
+      'เปิดข้อความเพื่อดูรายละเอียด มอบหมายผู้รับผิดชอบ และเปลี่ยนสถานะเมื่อติดต่อกลับแล้ว',
     useAsTitle: 'name',
     defaultColumns: ['name', 'contact', 'status', 'createdAt'],
   },
@@ -21,7 +23,12 @@ export const Leads: CollectionConfig = {
       type: 'row',
       fields: [
         { name: 'name', type: 'text', required: true, label: 'ชื่อ' },
-        { name: 'contact', type: 'text', required: true, label: 'อีเมล / เบอร์โทร' },
+        {
+          name: 'contact',
+          type: 'text',
+          required: true,
+          label: 'อีเมล / เบอร์โทร',
+        },
       ],
     },
     {
@@ -40,10 +47,15 @@ export const Leads: CollectionConfig = {
           ],
           defaultValue: 'unspecified',
         },
-        { name: 'packageInterest', type: 'text', label: 'แพ็กเกจที่สนใจ (ข้อมูลเดิม)', admin: { hidden: true } },
+        {
+          name: 'packageInterest',
+          type: 'text',
+          label: 'แพ็กเกจที่สนใจ (ข้อมูลเดิม)',
+          admin: { hidden: true },
+        },
       ],
     },
-    { name: 'message', type: 'textarea', label: 'รายละเอียดงาน' },
+    { name: 'message', type: 'textarea', label: 'รายละเอียดที่ลูกค้าส่งมา' },
     {
       name: 'status',
       type: 'select',

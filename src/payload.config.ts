@@ -5,6 +5,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
+import { th } from '@payloadcms/translations/languages/th'
 
 import { Leads } from './collections/Leads'
 import { Media } from './collections/Media'
@@ -24,16 +25,28 @@ export default buildConfig({
       titleSuffix: ' · Promptthum Admin',
     },
     components: {
-      views: { dashboard: { Component: '@/components/admin/DashboardStats#DashboardStats' } },
+      views: {
+        dashboard: {
+          Component: '@/components/admin/DashboardStats#DashboardStats',
+        },
+      },
       beforeNavLinks: ['@/components/admin/AdminBrand#AdminBrand'],
+      graphics: {
+        Logo: '@/components/admin/AdminLogo#AdminLogo',
+        Icon: '@/components/admin/AdminLogo#AdminIcon',
+      },
     },
   },
+  i18n: { supportedLanguages: { th }, fallbackLanguage: 'th' },
   collections: [Leads, Articles, Portfolio, Media, Users],
   globals: [SiteVideo, SiteContact],
   editor: lexicalEditor(),
   db: postgresAdapter({
     // Railway's Postgres plugin injects DATABASE_URL; DATABASE_URI lets us override it.
-    pool: { connectionString: process.env.DATABASE_URI || process.env.DATABASE_URL || '' },
+    pool: {
+      connectionString:
+        process.env.DATABASE_URI || process.env.DATABASE_URL || '',
+    },
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
   secret: process.env.PAYLOAD_SECRET || '',
