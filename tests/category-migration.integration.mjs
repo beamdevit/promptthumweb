@@ -30,9 +30,9 @@ const db = { execute: async statement => {
 } }
 const imports = { '@payloadcms/db-postgres': { sql, MigrateUpArgs: undefined, MigrateDownArgs: undefined }, '../lib/content-slug': { contentSlug } }
 try {
-  const migrations = (await readdir(new URL('../src/migrations/', import.meta.url))).filter(file => file.endsWith('.ts') && file !== 'index.ts').sort()
-  const latest = migrations.pop()
-  assert.match(latest, /_categories\.ts$/)
+  const allMigrations = (await readdir(new URL('../src/migrations/', import.meta.url))).filter(file => file.endsWith('.ts') && file !== 'index.ts').sort()
+  const latest = '20261013_085856_categories.ts'
+  const migrations = allMigrations.filter(file => file < latest)
   for (const file of migrations) await (await load('src/migrations/' + file, imports)).up({ db })
 
   const names = ['เทคนิค SEO', 'SEO', 'seo', '👋', "SEO'; DROP TABLE articles; --", 'บทความ']
@@ -86,6 +86,7 @@ try {
   console.log('PASS: all migrations, existing categories, drafts, versions, collisions, custom filters, rename, guarded rollback, down and re-up')
 
   if (process.env.PAYLOAD_CATEGORY_TEST === '1') {
+    for (const file of allMigrations.filter(file => file > latest)) await (await load('src/migrations/' + file, imports)).up({ db })
     // Run with --import tsx. The real Payload adapter uses this local pg-compatible
     // client, so no actual PostgreSQL server or production credentials are used.
     process.env.PAYLOAD_SECRET = 'isolated-category-integration-test-only'

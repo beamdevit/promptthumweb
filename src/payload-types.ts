@@ -101,11 +101,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-branding': SiteBranding;
+    'site-about': SiteAbout;
     'site-video': SiteVideo;
     'site-contact': SiteContact;
   };
   globalsSelect: {
     'site-branding': SiteBrandingSelect<false> | SiteBrandingSelect<true>;
+    'site-about': SiteAboutSelect<false> | SiteAboutSelect<true>;
     'site-video': SiteVideoSelect<false> | SiteVideoSelect<true>;
     'site-contact': SiteContactSelect<false> | SiteContactSelect<true>;
   };
@@ -766,6 +768,62 @@ export interface SiteBranding {
   createdAt?: string | null;
 }
 /**
+ * แก้ไขหัวข้อ เนื้อหา และรูปภาพในส่วน About Us ของหน้าแรก แล้วกดบันทึกเพื่อแสดงบนเว็บไซต์
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-about".
+ */
+export interface SiteAbout {
+  id: number;
+  heading: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  headingEn?: string | null;
+  contentEn?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * เช่น ABOUT US เว้นว่างเพื่อซ่อนข้อความนี้
+   */
+  eyebrow?: string | null;
+  /**
+   * เลือกจากคลังสื่อหรืออัปโหลดรูปใหม่ หากไม่เลือกรูปจะใช้โลโก้เว็บไซต์ปัจจุบัน
+   */
+  image?: (number | null) | Media;
+  /**
+   * อธิบายรูปสั้น ๆ สำหรับโปรแกรมอ่านหน้าจอ หากเว้นว่างจะใช้คำอธิบายในคลังสื่อ
+   */
+  imageAlt?: string | null;
+  imageAltEn?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * เปลี่ยนวิดีโอหน้าแรกและหน้า Welcome วางลิงก์แล้วกดบันทึก หากใส่ไฟล์ MP4 / WebM ระบบจะใช้ไฟล์นั้นแทน YouTube
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -814,6 +872,23 @@ export interface SiteContact {
 export interface SiteBrandingSelect<T extends boolean = true> {
   logo?: T;
   logoAlt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-about_select".
+ */
+export interface SiteAboutSelect<T extends boolean = true> {
+  heading?: T;
+  content?: T;
+  headingEn?: T;
+  contentEn?: T;
+  eyebrow?: T;
+  image?: T;
+  imageAlt?: T;
+  imageAltEn?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

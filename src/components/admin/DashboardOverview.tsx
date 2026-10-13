@@ -58,8 +58,15 @@ const tasks = [
     action: 'อัปโหลดไฟล์',
   },
   {
+    title: 'About Us / เกี่ยวกับเรา',
+    description: 'แก้ไขเรื่องราว หัวข้อ และรูปภาพ ทั้งภาษาไทยและอังกฤษ',
+    icon: '✎',
+    href: '/admin/globals/site-about',
+    action: 'แก้ไข About Us',
+  },
+  {
     title: 'โลโก้เว็บไซต์',
-    description: 'เปลี่ยนโลโก้ในเมนู หน้า Welcome และประวัติบริษัท',
+    description: 'เปลี่ยนโลโก้หลักของเว็บไซต์และหน้า Welcome',
     icon: 'P',
     href: '/admin/globals/site-branding',
     action: 'เปลี่ยนโลโก้',

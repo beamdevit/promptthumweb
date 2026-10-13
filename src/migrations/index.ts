@@ -8,6 +8,7 @@ import * as migration_20261012_184253_admin_usability from './20261012_184253_ad
 import * as migration_20261012_190133_site_branding from './20261012_190133_site_branding';
 import * as migration_20261012_192116_visitor_analytics from './20261012_192116_visitor_analytics';
 import * as migration_20261013_085856_categories from './20261013_085856_categories';
+import * as migration_20261013_121504_site_about from './20261013_121504_site_about';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20261013_085856_categories.up,
     down: migration_20261013_085856_categories.down,
-    name: '20261013_085856_categories'
+    name: '20261013_085856_categories',
+  },
+  {
+    up: migration_20261013_121504_site_about.up,
+    down: migration_20261013_121504_site_about.down,
+    name: '20261013_121504_site_about'
   },
 ];

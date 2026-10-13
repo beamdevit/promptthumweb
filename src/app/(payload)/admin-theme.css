@@ -136,6 +136,22 @@ body{background:var(--theme-bg)}
 .collection-edit .tabs-field__content-wrap{padding:24px}
 .collection-edit .document-fields__sidebar-fields{padding-top:24px}
 
+/* About Us uses the same padded editor cards as collection edit forms. */
+.pt-about-tabs{margin:0}
+.pt-about-tabs .tabs-field__tabs-wrap{border:1px solid var(--pt-border);background:white;border-radius:12px 12px 0 0;margin-bottom:0}
+.pt-about-tabs .tabs-field__tabs{display:flex;flex-wrap:nowrap;gap:16px;padding:0 20px;box-sizing:border-box;border-bottom:0;overflow-x:auto}
+.pt-about-tabs .tabs-field__tabs::before,.pt-about-tabs .tabs-field__tabs::after{display:none}
+.pt-about-tabs .tabs-field__tab-button{flex-shrink:0;align-items:center;min-height:52px;padding:14px 4px;margin:0;font-size:14px;line-height:1.5;box-sizing:border-box}
+.pt-about-tabs .tabs-field__tab-button::after{bottom:0}
+.pt-about-tabs .tabs-field__tab-button:not(.tabs-field__tab-button--has-error)::after{background:var(--pt-primary)}
+.pt-about-tabs .tabs-field__content-wrap{min-width:0;padding:24px;border:1px solid var(--pt-border);border-top:0;border-radius:0 0 12px 12px;background:white}
+@media(max-width:768px){
+  .pt-about-tabs .tabs-field__tabs{gap:12px;padding:0 12px}
+  .pt-about-tabs .tabs-field__tab-button{min-height:48px;padding:12px 4px}
+  .pt-about-tabs .tabs-field__content-wrap{padding:20px 16px}
+  .pt-about-tabs input:not([type=file]),.pt-about-tabs textarea{font-size:16px;min-width:0;max-width:100%}
+}
+
 .pt-analytics{margin-bottom:36px}
 .pt-analytics-heading{align-items:center;gap:16px}
 .pt-analytics-heading p{margin-top:7px}

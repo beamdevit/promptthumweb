@@ -435,6 +435,16 @@ section h2{font-size:clamp(24px,3vw,32px)}
   font:300 15px/1.9 Kanit,sans-serif;color:var(--on-blue-muted);
 }
 .about-body p:last-child{margin-bottom:0}
+.about-body,.about-content{min-width:0;overflow-wrap:anywhere}
+.about-logo img.about-custom-image{max-width:100%;max-height:480px;border-radius:16px}
+.about-content :is(h1,h2,h3,h4,h5,h6){color:var(--white);margin:24px 0 14px;line-height:1.4;font-size:clamp(20px,2.5vw,26px)}
+.about-content :is(ul,ol){padding-inline-start:24px;margin:0 0 18px;color:var(--on-blue-muted);font:300 15px/1.9 Kanit,sans-serif}
+.about-content ul{list-style:disc}.about-content ol{list-style:decimal}
+.about-content strong{font-weight:600}.about-content em{font-style:italic}
+.about-content a{color:var(--white);text-decoration:underline;text-underline-offset:3px}
+.about-content blockquote{border-inline-start:3px solid rgba(255,255,255,.45);padding-inline-start:18px;margin:20px 0;color:var(--on-blue-muted)}
+.about-content hr{border:0;border-top:1px solid rgba(255,255,255,.25);margin:24px 0}
+.about-content .payload-richtext>:first-child{margin-top:0}
 
 @media (max-width:960px){
   .about-card{grid-template-columns:1fr;gap:28px;padding:36px 26px}

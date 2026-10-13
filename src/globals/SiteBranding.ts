@@ -6,7 +6,7 @@ export const SiteBranding: GlobalConfig = {
   admin: {
     group: 'ตั้งค่าเว็บไซต์',
     description:
-      'เปลี่ยนโลโก้ในเมนูด้านบน หน้า Welcome และส่วนประวัติบริษัท แล้วกดบันทึกเพื่อแสดงบนเว็บไซต์',
+      'เปลี่ยนโลโก้ในเมนูด้านบน หน้า Welcome และส่วน About Us ที่ไม่ได้ตั้งรูปภาพแยก แล้วกดบันทึกเพื่อแสดงบนเว็บไซต์',
   },
   access: { read: () => true, update: ({ req }) => Boolean(req.user) },
   fields: [

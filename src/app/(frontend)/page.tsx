@@ -9,33 +9,16 @@ import { ContactForm } from '@/components/site/ContactForm'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
-import { SiteLogo } from '@/components/site/SiteLogo'
+import { AboutSection } from '@/components/site/AboutSection'
+import { getSiteAbout } from '@/lib/site-about'
 import { getFeaturedPortfolio } from '@/lib/portfolio'
 
 // Rendered per request: Railway's private network (and so Postgres) is not
 // reachable during the build, so these pages must not be prerendered.
 export const dynamic = 'force-dynamic'
 
-const companyHistory = [
-  'บริษัท พร้อมพ์ทำ จำกัด ก่อตั้งขึ้นจากความตั้งใจของทีมงานที่ต้องการนำความรู้และประสบการณ์ด้านการออกแบบกราฟิกและการตลาดออนไลน์ มาช่วยให้ธุรกิจสามารถสร้างภาพลักษณ์ที่ดีและสื่อสารกับกลุ่มลูกค้าได้อย่างมีประสิทธิภาพ โดยเฉพาะธุรกิจขนาดเล็กและผู้ที่กำลังเริ่มต้นทำธุรกิจ',
-  'ในช่วงเริ่มต้น บริษัทมุ่งเน้นการให้บริการด้านงานออกแบบกราฟิกเป็นหลัก ก่อนที่จะพัฒนาการให้บริการให้ครอบคลุมมากยิ่งขึ้น ทั้งการออกแบบสื่อประชาสัมพันธ์ การออกแบบแบรนด์ดิ้ง การออกแบบเว็บไซต์ การทำคอนเทนต์ และการตลาดออนไลน์ เพื่อให้ลูกค้าสามารถวางแผนและดำเนินงานด้านการสื่อสารการตลาดได้อย่างครบวงจรภายใต้ทีมงานเดียว',
-  'ตลอดระยะเวลาการดำเนินงาน เราได้มีโอกาสร่วมงานกับธุรกิจหลากหลายประเภท ทำให้ทีมงานได้เรียนรู้และเข้าใจความต้องการที่แตกต่างกันของแต่ละธุรกิจ และนำประสบการณ์เหล่านั้นมาพัฒนากระบวนการทำงานให้มีความยืดหยุ่น ใส่ใจในรายละเอียด และสามารถออกแบบงานให้เหมาะสมกับเป้าหมายของลูกค้าแต่ละราย',
-  'ปัจจุบัน บริษัท พร้อมพ์ทำ จำกัด ยังคงมุ่งมั่นในการพัฒนางานออกแบบและการตลาดออนไลน์อย่างต่อเนื่อง พร้อมนำแนวคิดสร้างสรรค์ เทคโนโลยี และความเข้าใจด้านธุรกิจมาประยุกต์ใช้ในการทำงาน เพื่อสร้างผลงานที่ไม่ได้มุ่งเน้นเพียงความสวยงาม แต่สามารถนำไปใช้งานจริงและช่วยสนับสนุนการเติบโตของธุรกิจได้อย่างเหมาะสม',
-  'เราเชื่อว่าการออกแบบที่ดีไม่ควรเป็นเรื่องไกลตัวสำหรับธุรกิจใด ๆ และทุกธุรกิจควรมีโอกาสเข้าถึงงานออกแบบที่มีคุณภาพ เพื่อสร้างความน่าเชื่อถือ สื่อสารตัวตนของแบรนด์ และเติบโตไปพร้อมกับธุรกิจของตนเอง',
-]
-
-
-
-const companyHistoryEn = [
-  "Promptthum was founded by a team who wanted to use their experience in graphic design and digital marketing to help businesses build a strong identity and connect with their customers, especially small businesses and new entrepreneurs.",
-  "We began with graphic design and expanded into advertising, branding, websites, content and digital marketing, bringing complete marketing support together under one team.",
-  "Working with many different businesses has helped us understand their individual needs. We use that experience to develop a flexible, detail-focused process built around each client’s goals.",
-  "Today, we continue to develop our design and digital marketing services, combining creativity, technology and business understanding to create work that looks good, works in practice and supports business growth.",
-  "We believe good design should be accessible to every business, helping brands build trust, express their identity and grow."
-]
-
 export default async function HomePage() {
-  const [featuredWork, video, articles, contact] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact()])
+  const [featuredWork, video, articles, contact, about] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact(), getSiteAbout()])
 
   return (
     <>
@@ -56,25 +39,7 @@ export default async function HomePage() {
         </section>
 
         <HomeShowcase />
-
-
-
-        <section className="about" id="about">
-          <div className="wrap">
-            <div className="about-card">
-              <div className="about-logo">
-                <SiteLogo />
-              </div>
-              <div className="about-body">
-                <span className="about-eyebrow">ABOUT US</span>
-                <h2><T>ประวัติบริษัท</T></h2>
-                {companyHistory.map((paragraph, index) => (
-                  <p key={index}><T en={companyHistoryEn[index]}>{paragraph}</T></p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <AboutSection about={about} />
 
         {featuredWork.length > 0 && (
           <section className="portfolio" id="portfolio">

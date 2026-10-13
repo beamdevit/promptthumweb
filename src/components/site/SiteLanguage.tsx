@@ -29,3 +29,8 @@ export function SiteDate({ value }: { value: string }) {
   const { locale } = useSiteLanguage()
   return <>{new Intl.DateTimeFormat(locale === 'th' ? 'th-TH' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Bangkok' }).format(new Date(value))}</>
 }
+
+export function LocalizedContent({ th, en }: { th: ReactNode; en: ReactNode }) {
+  const { locale } = useSiteLanguage()
+  return <>{locale === 'en' ? en : th}</>
+}

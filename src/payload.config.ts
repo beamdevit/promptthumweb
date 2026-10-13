@@ -15,6 +15,7 @@ import { SiteVideo } from './globals/SiteVideo'
 import { Articles } from './collections/Articles'
 import { SiteContact } from './globals/SiteContact'
 import { SiteBranding } from './globals/SiteBranding'
+import { SiteAbout } from './globals/SiteAbout'
 import { SiteVisits } from './collections/SiteVisits'
 import { ArticleCategories, PortfolioCategories } from './collections/Categories'
 
@@ -42,7 +43,7 @@ export default buildConfig({
   },
   i18n: { supportedLanguages: { th }, fallbackLanguage: 'th' },
   collections: [Leads, Articles, Portfolio, ArticleCategories, PortfolioCategories, Media, Users, SiteVisits],
-  globals: [SiteBranding, SiteVideo, SiteContact],
+  globals: [SiteBranding, SiteAbout, SiteVideo, SiteContact],
   editor: lexicalEditor(),
   db: postgresAdapter({
     // Railway's Postgres plugin injects DATABASE_URL; DATABASE_URI lets us override it.
