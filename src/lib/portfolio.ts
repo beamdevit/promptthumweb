@@ -1,12 +1,10 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 
-import { PORTFOLIO_CATEGORIES } from '@/collections/Portfolio'
+import { categoryName } from './category-label'
 import type { Media, Portfolio } from '@/payload-types'
 
-export const categoryLabel = (value: string) =>
-  PORTFOLIO_CATEGORIES.find((category) => category.value === value)?.label ??
-  value
+export const categoryLabel = (value: Portfolio['category']) => categoryName(value, 'ผลงาน')
 
 export const coverOf = (item: Portfolio) =>
   typeof item.cover === 'object' && item.cover ? (item.cover as Media) : null
@@ -26,7 +24,7 @@ export async function getPortfolio({
     where: {
       and: [
         { published: { equals: true } },
-        ...(category ? [{ category: { equals: category } }] : []),
+        ...(category ? [{ 'category.slug': { equals: category } }] : []),
       ],
     },
   })

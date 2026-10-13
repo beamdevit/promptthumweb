@@ -70,6 +70,8 @@ export interface Config {
     leads: Lead;
     articles: Article;
     portfolio: Portfolio;
+    'article-categories': ArticleCategory;
+    'portfolio-categories': PortfolioCategory;
     media: Media;
     users: User;
     'site-visits': SiteVisit;
@@ -83,6 +85,8 @@ export interface Config {
     leads: LeadsSelect<false> | LeadsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    'article-categories': ArticleCategoriesSelect<false> | ArticleCategoriesSelect<true>;
+    'portfolio-categories': PortfolioCategoriesSelect<false> | PortfolioCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'site-visits': SiteVisitsSelect<false> | SiteVisitsSelect<true>;
@@ -232,7 +236,10 @@ export interface Article {
    * เว้นว่างเพื่อสร้างจากชื่อเรื่องอัตโนมัติ ควรคงชื่อ URL หลังเผยแพร่
    */
   slug?: string | null;
-  category?: string | null;
+  /**
+   * เลือกหมวดหมู่ หรือกด + เพื่อเพิ่มหมวดใหม่
+   */
+  category?: (number | null) | ArticleCategory;
   /**
    * ระบบใส่วันที่ให้เมื่อเผยแพร่ครั้งแรก ช่องนี้เป็นวันที่แสดง ไม่ใช่การตั้งเวลาเผยแพร่
    */
@@ -293,6 +300,26 @@ export interface Media {
   };
 }
 /**
+ * เพิ่มหรือแก้ไขชื่อหมวดหมู่ แล้วเลือกใช้ในหน้าแก้ไขเนื้อหา เลขลำดับน้อยแสดงก่อน
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-categories".
+ */
+export interface ArticleCategory {
+  id: number;
+  name: string;
+  /**
+   * เว้นว่างเพื่อสร้างจากชื่อหมวดหมู่ ควรคง URL เดิมเมื่อเปลี่ยนชื่อ
+   */
+  slug: string;
+  /**
+   * เลขน้อยแสดงก่อน เช่น 0, 1, 2
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * เพิ่มชื่อ รายละเอียด และภาพปก เปิด “เผยแพร่” เพื่อแสดงบนเว็บไซต์ และเลือก “แสดงบนหน้าแรก” สำหรับผลงานเด่น
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -301,7 +328,10 @@ export interface Media {
 export interface Portfolio {
   id: number;
   title: string;
-  category: 'website' | 'graphic' | 'branding' | 'ads' | 'video' | 'packaging';
+  /**
+   * เลือกหมวดหมู่ หรือกด + เพื่อเพิ่มหมวดใหม่
+   */
+  category: number | PortfolioCategory;
   client?: string | null;
   year?: string | null;
   /**
@@ -347,6 +377,26 @@ export interface Portfolio {
   featured?: boolean | null;
   /**
    * เลขน้อยขึ้นก่อน
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * เพิ่มหรือแก้ไขชื่อหมวดหมู่ แล้วเลือกใช้ในหน้าแก้ไขเนื้อหา เลขลำดับน้อยแสดงก่อน
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories".
+ */
+export interface PortfolioCategory {
+  id: number;
+  name: string;
+  /**
+   * เว้นว่างเพื่อสร้างจากชื่อหมวดหมู่ ควรคง URL เดิมเมื่อเปลี่ยนชื่อ
+   */
+  slug: string;
+  /**
+   * เลขน้อยแสดงก่อน เช่น 0, 1, 2
    */
   order?: number | null;
   updatedAt: string;
@@ -401,6 +451,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'portfolio';
         value: number | Portfolio;
+      } | null)
+    | ({
+        relationTo: 'article-categories';
+        value: number | ArticleCategory;
+      } | null)
+    | ({
+        relationTo: 'portfolio-categories';
+        value: number | PortfolioCategory;
       } | null)
     | ({
         relationTo: 'media';
@@ -532,6 +590,28 @@ export interface PortfolioSelect<T extends boolean = true> {
   slug?: T;
   published?: T;
   featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-categories_select".
+ */
+export interface ArticleCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories_select".
+ */
+export interface PortfolioCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;

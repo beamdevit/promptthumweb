@@ -140,10 +140,13 @@ export const Articles: CollectionConfig = {
     },
     {
       name: 'category',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'article-categories',
       label: 'หมวดหมู่',
-      defaultValue: 'บทความ',
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        description: 'เลือกหมวดหมู่ หรือกด + เพื่อเพิ่มหมวดใหม่',
+      },
     },
     {
       name: 'publishedAt',

@@ -16,6 +16,7 @@ import { Articles } from './collections/Articles'
 import { SiteContact } from './globals/SiteContact'
 import { SiteBranding } from './globals/SiteBranding'
 import { SiteVisits } from './collections/SiteVisits'
+import { ArticleCategories, PortfolioCategories } from './collections/Categories'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -40,7 +41,7 @@ export default buildConfig({
     },
   },
   i18n: { supportedLanguages: { th }, fallbackLanguage: 'th' },
-  collections: [Leads, Articles, Portfolio, Media, Users, SiteVisits],
+  collections: [Leads, Articles, Portfolio, ArticleCategories, PortfolioCategories, Media, Users, SiteVisits],
   globals: [SiteBranding, SiteVideo, SiteContact],
   editor: lexicalEditor(),
   db: postgresAdapter({

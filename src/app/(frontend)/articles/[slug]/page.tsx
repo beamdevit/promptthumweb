@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { SiteFooter } from '@/components/site/SiteFooter'
-import { articleCover, getArticleBySlug } from '@/lib/articles'
+import { articleCategoryLabel, articleCover, getArticleBySlug } from '@/lib/articles'
 
 export const dynamic = 'force-dynamic'
 type Props = { params: Promise<{ slug: string }> }
@@ -21,7 +21,7 @@ export default async function ArticlePage({ params }: Props) {
   const cover = articleCover(article)
   const date = article.publishedAt || article.createdAt
   return <><SiteHeader /><main>
-    <section className="page-hero"><div className="wrap"><a className="work-back" href="/articles"><T>← บทความทั้งหมด</T></a><span className="page-hero-eyebrow">{article.category || <T>บทความ</T>}</span><h1>{article.title}</h1>{article.summary && <p>{article.summary}</p>}<time dateTime={date}><SiteDate value={date} /></time></div></section>
+    <section className="page-hero"><div className="wrap"><a className="work-back" href="/articles"><T>← บทความทั้งหมด</T></a><span className="page-hero-eyebrow"><T>{articleCategoryLabel(article.category)}</T></span><h1>{article.title}</h1>{article.summary && <p>{article.summary}</p>}<time dateTime={date}><SiteDate value={date} /></time></div></section>
     <article className="article-detail wrap">
       {cover?.url && <figure className="article-detail-cover"><img src={cover.sizes?.hero?.url || cover.url} alt={cover.alt || article.title} />{cover.caption && <figcaption>{cover.caption}</figcaption>}</figure>}
       <div className="work-prose article-prose"><RichText data={article.content} /></div>

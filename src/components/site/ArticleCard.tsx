@@ -1,6 +1,6 @@
 import { T, SiteDate } from '@/components/site/SiteLanguage'
 import type { Article } from '@/payload-types'
-import { articleCover } from '@/lib/articles'
+import { articleCategoryLabel, articleCover } from '@/lib/articles'
 
 export function ArticleCard({ article }: { article: Article }) {
   if (!article.slug) return null
@@ -10,7 +10,7 @@ export function ArticleCard({ article }: { article: Article }) {
     <div className="article-thumb">
       {cover?.url && <img className="article-cover-image" src={cover.sizes?.card?.url || cover.url} alt={cover.alt || article.title} loading="lazy" />}
       <span className="article-thumb-logo">promptthum</span>
-      <div className="article-thumb-overlay"><span className="article-thumb-tag">{article.category || <T>บทความ</T>}</span><div className="article-thumb-title">{article.title}</div></div>
+      <div className="article-thumb-overlay"><span className="article-thumb-tag"><T>{articleCategoryLabel(article.category)}</T></span><div className="article-thumb-title">{article.title}</div></div>
     </div>
     <div className="article-body">
       <time dateTime={date}><SiteDate value={date} /></time><h3>{article.title}</h3>

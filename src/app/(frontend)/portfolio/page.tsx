@@ -1,7 +1,7 @@
 import { T } from '@/components/site/SiteLanguage'
 import type { Metadata } from 'next'
 
-import { PORTFOLIO_CATEGORIES } from '@/collections/Portfolio'
+import { getPortfolioCategories } from '@/lib/categories'
 import { PortfolioCard } from '@/components/site/PortfolioCard'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
@@ -21,7 +21,8 @@ type Props = { searchParams: Promise<{ cat?: string }> }
 
 export default async function PortfolioPage({ searchParams }: Props) {
   const { cat } = await searchParams
-  const active = PORTFOLIO_CATEGORIES.some((category) => category.value === cat) ? cat : undefined
+  const categories = await getPortfolioCategories()
+  const active = categories.some((category) => category.slug === cat) ? cat : undefined
   const items = await getPortfolio({ category: active })
 
   return (
@@ -41,13 +42,13 @@ export default async function PortfolioPage({ searchParams }: Props) {
           <div className="wrap">
             <nav className="work-filters" aria-label="กรองตามหมวดหมู่">
               <a className={`work-filter${!active ? ' is-active' : ''}`} href="/portfolio"><T>ทั้งหมด</T></a>
-              {PORTFOLIO_CATEGORIES.map((category) => (
+              {categories.map((category) => (
                 <a
-                  key={category.value}
-                  className={`work-filter${active === category.value ? ' is-active' : ''}`}
-                  href={`/portfolio?cat=${category.value}`}
+                  key={category.id}
+                  className={`work-filter${active === category.slug ? ' is-active' : ''}`}
+                  href={`/portfolio?cat=${encodeURIComponent(category.slug)}`}
                 >
-                  <T>{category.label}</T>
+                  <T>{category.name}</T>
                 </a>
               ))}
             </nav>

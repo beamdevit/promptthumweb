@@ -2,6 +2,9 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import type { Article } from '@/payload-types'
+import { categoryName } from './category-label'
+
+export const articleCategoryLabel = (value: Article['category']) => categoryName(value, 'บทความ')
 
 export const articleCover = (article: Article) => typeof article.cover === 'object' && article.cover ? article.cover : null
 export const articleDate = (date: string) => new Date(date).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Bangkok' })

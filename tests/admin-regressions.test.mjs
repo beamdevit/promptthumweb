@@ -32,7 +32,7 @@ const slugImports = {
   '../lib/content-slug': { contentSlug },
   '@payloadcms/richtext-lexical': editorStub,
 }
-const { Portfolio, PORTFOLIO_CATEGORIES } = await load(
+const { Portfolio } = await load(
   'src/collections/Portfolio.ts',
   slugImports,
 )
@@ -156,14 +156,14 @@ test('public portfolio lists, featured fallback and detail pages never return un
       slug: 'visible',
       published: true,
       featured: false,
-      category: 'website',
+      category: { id: 1, name: 'เว็บไซต์', slug: 'website' },
     },
     {
       id: 2,
       slug: 'hidden',
       published: false,
       featured: true,
-      category: 'website',
+      category: { id: 1, name: 'เว็บไซต์', slug: 'website' },
     },
   ]
   function matches(row, where) {
@@ -172,7 +172,7 @@ test('public portfolio lists, featured fallback and detail pages never return un
       Object.entries(where).every(([key, value]) =>
         key === 'and'
           ? value.every((condition) => matches(row, condition))
-          : row[key] === value.equals,
+          : key.split('.').reduce((item, field) => item?.[field], row) === value.equals,
       )
     )
   }
@@ -187,7 +187,7 @@ test('public portfolio lists, featured fallback and detail pages never return un
   const api = await load('src/lib/portfolio.ts', {
     '@payload-config': { default: {} },
     payload: { getPayload: async () => ({ find }) },
-    '@/collections/Portfolio': { PORTFOLIO_CATEGORIES },
+    './category-label': await load('src/lib/category-label.ts'),
   })
   assert.deepEqual(
     (await api.getPortfolio()).map((row) => row.id),

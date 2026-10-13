@@ -5,15 +5,6 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { contentSlug } from '../lib/content-slug'
 
-export const PORTFOLIO_CATEGORIES = [
-  { label: 'เว็บไซต์', value: 'website' },
-  { label: 'กราฟิกดีไซน์', value: 'graphic' },
-  { label: 'โลโก้ / CI', value: 'branding' },
-  { label: 'Ads Banner', value: 'ads' },
-  { label: 'วิดีโอ', value: 'video' },
-  { label: 'Packaging', value: 'packaging' },
-] as const
-
 export const Portfolio: CollectionConfig = {
   slug: 'portfolio',
   labels: { singular: 'ผลงาน', plural: 'ผลงาน' },
@@ -48,10 +39,11 @@ export const Portfolio: CollectionConfig = {
               fields: [
                 {
                   name: 'category',
-                  type: 'select',
+                  type: 'relationship',
+                  relationTo: 'portfolio-categories',
                   required: true,
                   label: 'หมวดหมู่',
-                  options: [...PORTFOLIO_CATEGORIES],
+                  admin: { description: 'เลือกหมวดหมู่ หรือกด + เพื่อเพิ่มหมวดใหม่' },
                 },
                 { name: 'client', type: 'text', label: 'ลูกค้า' },
                 { name: 'year', type: 'text', label: 'ปี' },

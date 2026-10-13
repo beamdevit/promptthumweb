@@ -34,6 +34,22 @@ const tasks = [
     action: 'เพิ่มผลงาน',
   },
   {
+    title: 'หมวดหมู่บทความ',
+    description: 'เพิ่ม เปลี่ยนชื่อ และจัดลำดับหมวดหมู่บทความ',
+    icon: '≡',
+    href: '/admin/collections/article-categories',
+    create: '/admin/collections/article-categories/create',
+    action: 'เพิ่มหมวดหมู่',
+  },
+  {
+    title: 'หมวดหมู่ผลงาน',
+    description: 'จัดหมวดหมู่และตัวกรองผลงานบนเว็บไซต์',
+    icon: '≡',
+    href: '/admin/collections/portfolio-categories',
+    create: '/admin/collections/portfolio-categories/create',
+    action: 'เพิ่มหมวดหมู่',
+  },
+  {
     title: 'คลังรูปและวิดีโอ',
     description: 'ค้นหาและอัปโหลดไฟล์สำหรับเว็บไซต์',
     icon: '▧',
