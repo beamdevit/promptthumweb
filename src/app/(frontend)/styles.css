@@ -572,9 +572,11 @@ section h2{font-size:clamp(24px,3vw,32px)}
 }
 
 /* Shared showreel: the same dimensions and video on both public pages. */
-.site-showreel{--showreel-scale:.5;width:min(1160px,calc(100vw - 40px));flex-shrink:0;height:175svh;text-align:center;margin-inline:0;align-self:center}
+.site-showreel{--showreel-scale:.5;--showreel-width:min(1160px,calc(100vw - 40px));width:var(--showreel-width);flex-shrink:0;height:175svh;text-align:center;margin-inline:0;align-self:center}
 .site-showreel-stage{position:sticky;top:120px;height:calc(100svh - 144px);display:flex;align-items:center;justify-content:center}
-.site-showreel-frame{position:relative;width:100%;aspect-ratio:49/36;max-height:calc(100svh - 160px);transform:perspective(1200px) scale(var(--showreel-scale));will-change:transform;overflow:hidden;border-radius:30px;background:#0c0c0c}
+/* Give Safari a definite height so percentage-sized players cannot extend below the clipped frame. */
+.site-showreel-frame{position:relative;width:100%;height:min(calc(var(--showreel-width) * 36 / 49),calc(100svh - 160px));transform:perspective(1200px) scale(var(--showreel-scale));will-change:transform;overflow:hidden;border-radius:30px;background:#0c0c0c}
+.site-showreel-frame > .premium-video:not(:fullscreen):not(.is-expanded){position:absolute;inset:0}
 .site-showreel .premium-control svg{width:32px;height:32px}
 .showreel-youtube-viewport{position:relative;container-type:size;width:100%;height:100%;overflow:hidden}
 .site-showreel .showreel-youtube-viewport iframe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100cqw,calc(100cqh * 16 / 9));height:max(100cqh,calc(100cqw * 9 / 16));max-width:none;border:0}
@@ -584,7 +586,7 @@ section h2{font-size:clamp(24px,3vw,32px)}
 @media(max-width:760px){
   .site-showreel{--showreel-scale:1;width:100%;max-width:none;height:auto}
   .site-showreel-stage{position:relative;top:auto;height:auto}
-  .site-showreel-frame{width:min(92%,calc(74svh * 8 / 13));aspect-ratio:8/13;max-height:none;transform:none;will-change:auto}
+  .site-showreel-frame{width:min(92%,calc(74svh * 8 / 13));height:auto;aspect-ratio:8/13;transform:none;will-change:auto}
   .splash.splash--video{padding:56px 0 36px;gap:44px}
 }
 @media(prefers-reduced-motion:reduce){.site-showreel{height:auto;--showreel-scale:1}.site-showreel-stage{position:relative;top:auto}.site-showreel-frame{transform:none;will-change:auto}}
