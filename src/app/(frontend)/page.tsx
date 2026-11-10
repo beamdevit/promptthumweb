@@ -11,14 +11,16 @@ import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { AboutSection } from '@/components/site/AboutSection'
 import { getSiteAbout } from '@/lib/site-about'
-import { getFeaturedPortfolio } from '@/lib/portfolio'
+import { coverOf, getFeaturedPortfolio, getPortfolio } from '@/lib/portfolio'
+import { HeroFloat } from '@/components/site/HeroFloat'
 
 // Rendered per request: Railway's private network (and so Postgres) is not
 // reachable during the build, so these pages must not be prerendered.
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  const [featuredWork, video, articles, contact, about] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact(), getSiteAbout()])
+  const [featuredWork, video, articles, contact, about, heroWork] = await Promise.all([getFeaturedPortfolio(3), getSiteVideo(), getArticles(1, 4), getSiteContact(), getSiteAbout(), getPortfolio({ limit: 8 })])
+  const heroCovers = heroWork.flatMap(item => { const cover = coverOf(item); return cover?.url ? [{ src: cover.url, alt: cover.alt || item.title }] : [] })
 
   return (
     <>
@@ -26,16 +28,21 @@ export default async function HomePage() {
 
       <main>
         <section className="hero">
+          <HeroFloat covers={heroCovers} />
           <div className="wrap hero-inner">
             <div className="hero-copy">
               <h1><T>อย่าให้ไอเดียของคุณอยู่แค่ในความคิด</T></h1>
               <p className="lede"><T>Promptthum ที่นี่เรารับทำเว็บไซต์ที่มีคุณภาพ รองรับ SEO และทุกอุปกรณ์ รวมถึงให้คำปรึกษา ออกแบบ UX/UI ปรับแต่ง จนถึงช่วยทำการตลาด กราฟิกดีไซน์ สื่อโซเชียลมีเดียและสื่อสิ่งพิมพ์ เรียกได้ว่าครบจบในที่เดียว ราคาสบายกระเป๋า ด้วยทีมงานมืออาชีพ</T></p>
               <div className="hero-cta">
-                <a className="btn btn-outline" href="#contact"><T>คุยกับทีม</T></a>
+                <a className="btn btn-solid" href="#contact"><T>คุยกับทีม</T></a>
+                <a className="btn btn-outline" href="/portfolio"><T en="View our work">ดูผลงาน</T></a>
               </div>
             </div>
-            <SiteShowreel {...video} />
           </div>
+        </section>
+
+        <section className="hero-showreel" id="showreel">
+          <SiteShowreel {...video} />
         </section>
 
         <HomeShowcase />
