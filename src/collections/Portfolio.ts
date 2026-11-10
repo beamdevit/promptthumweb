@@ -11,7 +11,7 @@ export const Portfolio: CollectionConfig = {
   admin: {
     group: 'เนื้อหาเว็บไซต์',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'published', 'featured', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'published', 'featured'],
     description:
       'เพิ่มชื่อ รายละเอียด และภาพปก เปิด “เผยแพร่” เพื่อแสดงบนเว็บไซต์ และเลือก “แสดงบนหน้าแรก” สำหรับผลงานเด่น',
   },

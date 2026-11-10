@@ -16,7 +16,6 @@ export const Articles: CollectionConfig = {
       'category',
       '_status',
       'publishedAt',
-      'updatedAt',
     ],
     description: 'บันทึกร่างเพื่อทำงานต่อ หรือเผยแพร่เพื่อแสดงบนเว็บไซต์',
   },
@@ -154,6 +153,7 @@ export const Articles: CollectionConfig = {
       label: 'วันที่เผยแพร่',
       admin: {
         position: 'sidebar',
+        date: { displayFormat: "d MMM yo HH:mm 'น.'" },
         description:
           'ระบบใส่วันที่ให้เมื่อเผยแพร่ครั้งแรก ช่องนี้เป็นวันที่แสดง ไม่ใช่การตั้งเวลาเผยแพร่',
       },

@@ -113,6 +113,9 @@ body{background:var(--theme-bg)}
 .pt-login-logo img{display:block;width:210px;height:auto;max-width:100%}
 .pt-login-brand h1{font-size:23px;line-height:1.5;margin:0 0 8px}
 .pt-login-brand p{color:var(--pt-muted);font-size:13px;margin:0;line-height:1.7}
+.doc-controls__meta{flex-wrap:wrap;row-gap:6px}
+.doc-controls__content{overflow:visible}
+.doc-controls__value-wrap{overflow:visible;white-space:normal;flex:0 0 auto;max-width:100%}
 .pt-pw-wrap{position:relative}
 .pt-pw-wrap input{padding-right:46px!important}
 .pt-pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;color:var(--pt-muted);border-radius:8px;cursor:pointer;padding:0}

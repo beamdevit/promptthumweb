@@ -25,6 +25,7 @@ import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93
 import { AdminIcon as AdminIcon_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { AdminLogo as AdminLogo_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { AdminBrand as AdminBrand_c3544fd04a86558fd1f1e4a8d6afed38 } from '@/components/admin/AdminBrand'
+import { BuddhistYearProvider as BuddhistYearProvider_64e84eb0e03fb904e1d58c2dee11de32 } from '@/components/admin/BuddhistYear'
 import { PasswordToggle as PasswordToggle_0281325a0a7e8123f6c50d495f1599b3 } from '@/components/admin/PasswordToggle'
 import { DashboardStats as DashboardStats_7b57228c6f06a06348e4c53967f631ca } from '@/components/admin/DashboardStats'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -58,6 +59,7 @@ export const importMap = {
   "@/components/admin/AdminLogo#AdminIcon": AdminIcon_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/AdminLogo#AdminLogo": AdminLogo_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/AdminBrand#AdminBrand": AdminBrand_c3544fd04a86558fd1f1e4a8d6afed38,
+  "@/components/admin/BuddhistYear#BuddhistYearProvider": BuddhistYearProvider_64e84eb0e03fb904e1d58c2dee11de32,
   "@/components/admin/PasswordToggle#PasswordToggle": PasswordToggle_0281325a0a7e8123f6c50d495f1599b3,
   "@/components/admin/DashboardStats#DashboardStats": DashboardStats_7b57228c6f06a06348e4c53967f631ca,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1

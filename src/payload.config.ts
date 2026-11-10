@@ -25,6 +25,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     theme: 'light',
+    dateFormat: "d MMM yo HH:mm 'น.'",
     meta: {
       titleSuffix: ' · Promptthum Admin',
     },
@@ -36,6 +37,7 @@ export default buildConfig({
       },
       beforeNavLinks: ['@/components/admin/AdminBrand#AdminBrand'],
       afterLogin: ['@/components/admin/PasswordToggle#PasswordToggle'],
+      providers: ['@/components/admin/BuddhistYear#BuddhistYearProvider'],
       graphics: {
         Logo: '@/components/admin/AdminLogo#AdminLogo',
         Icon: '@/components/admin/AdminLogo#AdminIcon',
