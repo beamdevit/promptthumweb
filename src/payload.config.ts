@@ -35,6 +35,7 @@ export default buildConfig({
         },
       },
       beforeNavLinks: ['@/components/admin/AdminBrand#AdminBrand'],
+      afterLogin: ['@/components/admin/PasswordToggle#PasswordToggle'],
       graphics: {
         Logo: '@/components/admin/AdminLogo#AdminLogo',
         Icon: '@/components/admin/AdminLogo#AdminIcon',
