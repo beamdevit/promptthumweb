@@ -16,6 +16,14 @@ const serverFunction: ServerFunctionClient = async function (args) {
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+    {/* React 19 hoists these into <head>; fonts used by admin-theme.css (Thai falls back to Noto Sans Thai). */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      precedence="default"
+    />
     {children}
   </RootLayout>
 )
