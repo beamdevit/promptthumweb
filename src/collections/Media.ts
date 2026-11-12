@@ -26,15 +26,30 @@ export const Media: CollectionConfig = {
     ],
     formatOptions: { format: 'webp', options: { quality: 82 } },
   },
+  hooks: {
+    // Fill the name from the uploaded file name when the editor leaves it empty.
+    beforeValidate: [
+      ({ data, req }) => {
+        if (!data || (typeof data.alt === 'string' && data.alt.trim())) return data
+        const file = (req as { file?: { name?: string } }).file?.name || data.filename
+        if (typeof file !== 'string' || !file) return data
+        const name = file
+          .replace(/\.[^.]+$/, '')
+          .replace(/[_-]+/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+        return { ...data, alt: name || file }
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',
       type: 'text',
-      required: true,
       label: 'ชื่อ / คำอธิบายไฟล์',
       admin: {
         description:
-          'ใช้ค้นหาในคลังสื่อ และอธิบายภาพให้ผู้ใช้โปรแกรมอ่านหน้าจอ เช่น “QR เพิ่มเพื่อน LINE Promptthum”',
+          'เว้นว่างไว้ได้ ระบบจะใช้ชื่อไฟล์ให้อัตโนมัติ หรือพิมพ์เองเพื่อใช้ค้นหาและอธิบายภาพ เช่น “QR เพิ่มเพื่อน LINE Promptthum”',
       },
     },
     { name: 'caption', type: 'text', label: 'คำบรรยาย' },
