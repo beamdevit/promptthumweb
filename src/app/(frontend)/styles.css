@@ -5,7 +5,8 @@
 .articles-empty{padding:48px 24px;text-align:center;background:#f0f7ff;border:1px solid #dceaf7;border-radius:20px;line-height:1.8}
 .articles-pagination{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:40px}
 .articles-pagination a{padding:12px 18px;border:1px solid #dceaf7;border-radius:12px}
-.article-detail{padding-top:48px;padding-bottom:64px;max-width:900px}
+.article-detail{padding-top:100px;padding-bottom:100px;max-width:900px}
+@media(max-width:760px){.article-detail{padding-top:64px;padding-bottom:72px}}
 .article-detail-cover{margin:0 0 40px}
 .article-detail-cover img{display:block;width:100%;height:auto;border-radius:20px}
 .article-detail-cover figcaption{text-align:center;color:var(--muted);font-size:14px;margin-top:12px}
