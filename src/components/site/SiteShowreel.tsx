@@ -19,8 +19,8 @@ export function SiteShowreel({ videoId, videoUrl, poster }: { videoId: string; v
         element.style.setProperty('--showreel-scale', '1')
         return
       }
-      // Section is as tall as the hero: grow the video as it scrolls up into view.
-      const progress = Math.min(1, Math.max(0, (window.innerHeight - element.getBoundingClientRect().top) / (window.innerHeight * 0.85)))
+      const distance = window.innerHeight * 0.8
+      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.15 - element.getBoundingClientRect().top) / distance))
       element.style.setProperty('--showreel-scale', String(0.5 + progress * 0.5))
     }
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }

@@ -593,8 +593,8 @@ section h2{font-size:clamp(24px,3vw,32px)}
 }
 
 /* Shared showreel: the same dimensions and video on both public pages. */
-.site-showreel{--showreel-scale:.5;--showreel-width:min(1160px,calc(100vw - 40px));width:var(--showreel-width);flex-shrink:0;height:calc(max(640px,100svh) - 50px);text-align:center;margin-inline:0;align-self:center}
-.site-showreel-stage{position:relative;top:auto;height:100%;display:flex;align-items:center;justify-content:center}
+.site-showreel{--showreel-scale:.5;--showreel-width:min(1160px,calc(100vw - 40px));width:var(--showreel-width);flex-shrink:0;height:175svh;text-align:center;margin-inline:0;align-self:center}
+.site-showreel-stage{position:sticky;top:120px;height:calc(100svh - 144px);display:flex;align-items:center;justify-content:center}
 /* Give Safari a definite height so percentage-sized players cannot extend below the clipped frame. */
 .site-showreel-frame{position:relative;width:100%;height:min(calc(var(--showreel-width) * 36 / 49),calc(100svh - 160px));transform:perspective(1200px) scale(var(--showreel-scale));will-change:transform;overflow:hidden;border-radius:30px;background:#0c0c0c}
 .site-showreel-frame > .premium-video:not(:fullscreen):not(.is-expanded){position:absolute;inset:0}
