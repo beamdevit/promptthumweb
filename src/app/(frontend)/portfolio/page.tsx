@@ -2,7 +2,7 @@ import { T } from '@/components/site/SiteLanguage'
 import type { Metadata } from 'next'
 
 import { getPortfolioCategories } from '@/lib/categories'
-import { PortfolioCard } from '@/components/site/PortfolioCard'
+import { PortfolioCard, videoIdOf } from '@/components/site/PortfolioCard'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { getPortfolio } from '@/lib/portfolio'
@@ -24,6 +24,9 @@ export default async function PortfolioPage({ searchParams }: Props) {
   const categories = await getPortfolioCategories()
   const active = categories.some((category) => category.slug === cat) ? cat : undefined
   const items = await getPortfolio({ category: active })
+  // Video works (with a YouTube link) get their own portrait-card section.
+  const videos = items.filter((item) => videoIdOf(item))
+  const works = items.filter((item) => !videoIdOf(item))
 
   return (
     <>
@@ -54,11 +57,25 @@ export default async function PortfolioPage({ searchParams }: Props) {
             </nav>
 
             {items.length > 0 ? (
-              <div className="work-grid">
-                {items.map((item) => (
-                  <PortfolioCard key={item.id} item={item} />
-                ))}
-              </div>
+              <>
+                {works.length > 0 && (
+                  <div className="work-grid">
+                    {works.map((item) => (
+                      <PortfolioCard key={item.id} item={item} />
+                    ))}
+                  </div>
+                )}
+                {videos.length > 0 && (
+                  <div className="work-video-section">
+                    {works.length > 0 && <h2 className="work-video-heading"><T>วิดีโอ</T></h2>}
+                    <div className="work-video-grid">
+                      {videos.map((item) => (
+                        <PortfolioCard key={item.id} item={item} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             ) : active ? (
               <p className="work-empty"><T>ยังไม่มีผลงานในหมวดนี้ —</T><a href="/portfolio"><T>ดูผลงานทั้งหมด</T></a>
               </p>

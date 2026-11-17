@@ -4,6 +4,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { contentSlug } from '../lib/content-slug'
+import { youtubeId } from '../lib/youtube'
 
 export const Portfolio: CollectionConfig = {
   slug: 'portfolio',
@@ -48,6 +49,21 @@ export const Portfolio: CollectionConfig = {
                 { name: 'client', type: 'text', label: 'ลูกค้า' },
                 { name: 'year', type: 'text', label: 'ปี' },
               ],
+            },
+            {
+              name: 'youtubeUrl',
+              type: 'text',
+              label: 'ลิงก์ YouTube (ผลงานวิดีโอ)',
+              admin: {
+                description:
+                  'ไม่บังคับ วางลิงก์วิดีโอ YouTube หรือ Shorts เช่น https://youtube.com/shorts/xxxxxxxxxxx ถ้าใส่ ผลงานนี้จะแสดงเป็นการ์ดวิดีโอแนวตั้งในหน้าผลงาน (ภาพตัวอย่างดึงจาก YouTube ให้เอง หรือเลือกภาพปกเองในแท็บรูปภาพ)',
+              },
+              validate: (value: unknown) => {
+                if (typeof value !== 'string' || !value.trim()) return true
+                return youtubeId(value.trim())
+                  ? true
+                  : 'ลิงก์ YouTube ไม่ถูกต้อง ลองคัดลอกลิงก์จากปุ่มแชร์ของวิดีโออีกครั้ง'
+              },
             },
             {
               name: 'summary',

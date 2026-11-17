@@ -335,6 +335,10 @@ export interface Portfolio {
    */
   category: number | PortfolioCategory;
   client?: string | null;
+  /**
+   * ไม่บังคับ วางลิงก์วิดีโอ YouTube หรือ Shorts
+   */
+  youtubeUrl?: string | null;
   year?: string | null;
   /**
    * แสดงบนการ์ดผลงานและใช้เป็น meta description
@@ -573,6 +577,7 @@ export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
   category?: T;
   client?: T;
+  youtubeUrl?: T;
   year?: T;
   summary?: T;
   description?: T;
